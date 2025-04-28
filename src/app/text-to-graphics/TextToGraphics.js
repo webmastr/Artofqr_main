@@ -61,7 +61,6 @@ const TextToGraphics = ({
   const [productOptions, setProductOptions] = useState([]);
   const [productLoading, setProductLoading] = useState(false);
 
-
   const downloadPng = async () => {
     let graphic = document.getElementById("graphic-parent");
     if (graphic) {
@@ -80,7 +79,6 @@ const TextToGraphics = ({
       }, 1000);
     }
   };
-
 
   const downloadSvg = () => {
     let graphic = document.getElementById("graphic-parent");
@@ -118,7 +116,7 @@ const TextToGraphics = ({
           .then(async (dataUrl) => {
             setSpacingBuffer(5);
             // let data_ = dataUrl.replace("data:image/png;base64,", "");
-           
+
             let body = {
               file_name: `${generateFileName(text)}.png`,
               contents: dataUrl,
@@ -126,8 +124,8 @@ const TextToGraphics = ({
 
             try {
               const response = await axios.post(
-                "https://art-of-qr-backend.vercel.app/uploadImage/mockups",
-              
+                "https://artqr-backend.vercel.app/uploadImage/mockups",
+
                 body
               );
               if (response.status === 200) {
@@ -139,28 +137,23 @@ const TextToGraphics = ({
                 //   JSON.stringify(response.data.successful_mockups)
                 // );
 
-                const payload = JSON.stringify(response.data.results.successful_mockups)
-             
-
+                const payload = JSON.stringify(
+                  response.data.results.successful_mockups
+                );
 
                 console.log(payload);
                 await timer(5000);
 
                 const successfulUrls = await axios.get(
-                  `https://art-of-qr-backend.vercel.app/uploadImage/mockup-results?payload=${payload}`
+                  `https://artqr-backend.vercel.app/uploadImage/mockup-results?payload=${payload}`
                 );
                 setLoader(false);
-                if (successfulUrls.status === 200)
-                {
+                if (successfulUrls.status === 200) {
                   setActiveTab("results");
                   setMockupUrl(successfulUrls.data);
-                }
-                 
-                else setErrorMsg(successfulUrls.message);
-
-                
+                } else setErrorMsg(successfulUrls.message);
               }
-            
+
               if (response.status !== 200) {
                 setLoader(false);
                 setErrorMsg(response.data.error);
@@ -236,16 +229,14 @@ const TextToGraphics = ({
     }
   }, [url]);
 
-
-
   useEffect(() => {
     if (!textRef.current) return;
-    
+
     let textWidth = textRef.current.clientWidth;
     let textHeight = textRef.current.clientHeight;
-    
+
     let newSize;
-    
+
     // Special case for exactly 3 characters
     if (text.length === 3) {
       newSize = 58;
@@ -253,11 +244,11 @@ const TextToGraphics = ({
       setQrSize(newSize - (textHeight + spacingBuffer) * 2);
       return;
     }
-    
+
     if (config?.format === "center") {
       // Calculate size for centered format
       const lineCount = (text.match(/\n/g) || []).length + 1;
-      
+
       if (text.length <= 1) {
         newSize = defaultBoxSize;
       } else if (lineCount === 1) {
@@ -269,13 +260,13 @@ const TextToGraphics = ({
           textWidth + textHeight + 18 + spacingBuffer
         );
       }
-      
+
       // Set both box and QR size
       setBoxSize(newSize);
       setQrSize(newSize - (textHeight + spacingBuffer) * 2);
     } else {
       const lineCount = (text.match(/\n/g) || []).length + 1;
-      
+
       if (text.length <= 1) {
         newSize = defaultBoxSize;
       } else if (lineCount === 1) {
@@ -286,18 +277,18 @@ const TextToGraphics = ({
           textWidth + textHeight + spacingBuffer
         );
       }
-      
+
       // Set both box and QR size
       setBoxSize(newSize);
       setQrSize(newSize - (textHeight + spacingBuffer) * 2);
     }
   }, [text, spacingBuffer, config?.format, defaultBoxSize]);
 
-// Updated addToCart function
-const addToCart = (cartItem) => {
-  // Simply add the received cart item to the cart
-  setCart([...cart, cartItem]);
-};
+  // Updated addToCart function
+  const addToCart = (cartItem) => {
+    // Simply add the received cart item to the cart
+    setCart([...cart, cartItem]);
+  };
 
   // Handle order submission
   const placeOrder = async () => {
@@ -337,109 +328,109 @@ const addToCart = (cartItem) => {
     }, 1000);
   };
 
-const customStyles = {
-  qrBox: {
-    position: "relative",
-    color: "black",
-    backgroundColor: "white",
-    textAlign: "left",
-    transform: "rotate(45deg)",
-    lineHeight: "0.76",
-    fontWeight: "700",
-  },
-  qrBoxCentered: {
-    width: "330px",
-    height: "330px",
-    position: "relative",
-    backgroundColor: "white",
-    transform: "rotate(45deg)",
-    lineHeight: "0.76",
-  },
-  textTop: {
-    position: "absolute",
-    top: "0px",
-    right: "4px",
-    rotate: "180deg",
-    whiteSpace: "break-spaces",
-    wordWrap: "break-word",
-  },
-  textBottom: {
-    position: "absolute",
-    bottom: "0px",
-    left: "3px",
-    whiteSpace: "break-spaces",
-    wordWrap: "break-word",
-  },
-  textLeft: {
-    position: "absolute",
-    top: "3px",
-    left: "0px",
-    writingMode: "vertical-rl",
-    wordWrap: "break-word",
-    whiteSpace: "break-spaces",
-  },
-  textRight: {
-    position: "absolute",
-    writingMode: "vertical-rl",
-    transform: "rotate(180deg)",
-    textAlign: "left",
-    bottom: "3px",
-    right: "1px",
-    whiteSpace: "break-spaces",
-    wordWrap: "break-word",
-  },
-  textCentered: {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    justifyContent: "center",
-    color: "black",
-    wordWrap: "break-word",
-    whiteSpace: "break-spaces",
-  },
-  textCenteredP: {
-    margin: "0",
-    marginTop: "auto",
-  },
-  flexGraphics: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "100px",
-    opacity: "1",
-    padding: "55px",
-  },
-  qrImage: {
-    width: "100%",
-    height: "100%",
-  },
-  qrTextCenter: {
-    position: "absolute",
-    margin: "auto",
-    inset: "0",
-    color: "black",
-  },
-  triangle: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-    fontSize: "15px",
-    borderRadius: "10px",
-  },
-  qrTextBottomRightCentered: {
-    color: "black",
-    wordWrap: "break-word",
-    whiteSpace: "break-spaces",
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    justifyContent: "center",
-  },
-};
+  const customStyles = {
+    qrBox: {
+      position: "relative",
+      color: "black",
+      backgroundColor: "white",
+      textAlign: "left",
+      transform: "rotate(45deg)",
+      lineHeight: "0.76",
+      fontWeight: "700",
+    },
+    qrBoxCentered: {
+      width: "330px",
+      height: "330px",
+      position: "relative",
+      backgroundColor: "white",
+      transform: "rotate(45deg)",
+      lineHeight: "0.76",
+    },
+    textTop: {
+      position: "absolute",
+      top: "0px",
+      right: "4px",
+      rotate: "180deg",
+      whiteSpace: "break-spaces",
+      wordWrap: "break-word",
+    },
+    textBottom: {
+      position: "absolute",
+      bottom: "0px",
+      left: "3px",
+      whiteSpace: "break-spaces",
+      wordWrap: "break-word",
+    },
+    textLeft: {
+      position: "absolute",
+      top: "3px",
+      left: "0px",
+      writingMode: "vertical-rl",
+      wordWrap: "break-word",
+      whiteSpace: "break-spaces",
+    },
+    textRight: {
+      position: "absolute",
+      writingMode: "vertical-rl",
+      transform: "rotate(180deg)",
+      textAlign: "left",
+      bottom: "3px",
+      right: "1px",
+      whiteSpace: "break-spaces",
+      wordWrap: "break-word",
+    },
+    textCentered: {
+      position: "absolute",
+      inset: "0",
+      display: "flex",
+      justifyContent: "center",
+      color: "black",
+      wordWrap: "break-word",
+      whiteSpace: "break-spaces",
+    },
+    textCenteredP: {
+      margin: "0",
+      marginTop: "auto",
+    },
+    flexGraphics: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "100px",
+      opacity: "1",
+      padding: "55px",
+    },
+    qrImage: {
+      width: "100%",
+      height: "100%",
+    },
+    qrTextCenter: {
+      position: "absolute",
+      margin: "auto",
+      inset: "0",
+      color: "black",
+    },
+    triangle: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "hidden",
+      fontSize: "15px",
+      borderRadius: "10px",
+    },
+    qrTextBottomRightCentered: {
+      color: "black",
+      wordWrap: "break-word",
+      whiteSpace: "break-spaces",
+      position: "absolute",
+      inset: "0",
+      display: "flex",
+      justifyContent: "center",
+    },
+  };
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -573,13 +564,11 @@ const customStyles = {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-sm w-full text-center">
               <Loading message={loderMsg} />
-         
             </div>
           </div>
         )}
 
         {/* New font loading overlay */}
-
 
         {/* Help Info */}
         <div className="mt-8 text-center">

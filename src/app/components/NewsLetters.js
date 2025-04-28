@@ -16,16 +16,16 @@ function Newsletter() {
     visible: false,
     type: "success", // success or error
     message: "",
-    title: ""
+    title: "",
   });
 
   // Automatically hide toast after some time
   useEffect(() => {
     if (toast.visible) {
       const timer = setTimeout(() => {
-        setToast(prev => ({ ...prev, visible: false }));
+        setToast((prev) => ({ ...prev, visible: false }));
       }, 5000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [toast.visible]);
@@ -35,12 +35,12 @@ function Newsletter() {
       visible: true,
       type,
       message,
-      title
+      title,
     });
   };
 
   const hideToast = () => {
-    setToast(prev => ({ ...prev, visible: false }));
+    setToast((prev) => ({ ...prev, visible: false }));
   };
 
   const fadeUp = {
@@ -82,47 +82,54 @@ function Newsletter() {
 
   const toastAnimation = {
     hidden: { opacity: 0, y: -20, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { type: "spring", stiffness: 400, damping: 25 }
+      transition: { type: "spring", stiffness: 400, damping: 25 },
     },
-    exit: { 
-      opacity: 0, 
-      y: -20, 
-      scale: 0.95, 
-      transition: { duration: 0.2 } 
-    }
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95,
+      transition: { duration: 0.2 },
+    },
   };
 
   const handleSubscribe = async () => {
     if (!email || !email.includes("@")) {
-      showToast("Invalid Email", "Please enter a valid email address.", "error");
+      showToast(
+        "Invalid Email",
+        "Please enter a valid email address.",
+        "error"
+      );
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("https://art-of-qr-backend.vercel.app/newsletter/create-newsletter", { email }); // Update endpoint as needed
+      const response = await axios.post(
+        "https://artqr-backend.vercel.app/newsletter/create-newsletter",
+        { email }
+      ); // Update endpoint as needed
       if (response.status === 200) {
         showToast(
-          "Subscribed!", 
+          "Subscribed!",
           "You've successfully subscribed to the newsletter.",
           "success"
         );
         setEmail("");
       } else {
         showToast(
-          "Oops!", 
+          "Oops!",
           "Something went wrong. Please try again later.",
           "error"
         );
       }
     } catch (error) {
       showToast(
-        "Error", 
+        "Error",
         "Subscription failed. Please try again later.",
         "error"
       );
@@ -137,17 +144,25 @@ function Newsletter() {
       {/* Custom Toast */}
       <AnimatePresence>
         {toast.visible && (
-          <motion.div 
+          <motion.div
             className={`fixed top-4 right-4 z-50 max-w-md shadow-lg rounded-lg overflow-hidden flex items-center 
-              ${toast.type === "success" ? "bg-green-50 dark:bg-green-900/30" : "bg-red-50 dark:bg-red-900/30"}`}
+              ${
+                toast.type === "success"
+                  ? "bg-green-50 dark:bg-green-900/30"
+                  : "bg-red-50 dark:bg-red-900/30"
+              }`}
             variants={toastAnimation}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <div 
+            <div
               className={`px-4 py-6 flex gap-3 items-start w-full
-                ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}`}
+                ${
+                  toast.type === "success"
+                    ? "border-l-4 border-green-500"
+                    : "border-l-4 border-red-500"
+                }`}
             >
               {toast.type === "success" ? (
                 <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
@@ -155,18 +170,34 @@ function Newsletter() {
                 <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
               )}
               <div className="flex-1">
-                <h3 className={`font-medium ${toast.type === "success" ? "text-green-800 dark:text-green-300" : "text-red-800 dark:text-red-300"}`}>
+                <h3
+                  className={`font-medium ${
+                    toast.type === "success"
+                      ? "text-green-800 dark:text-green-300"
+                      : "text-red-800 dark:text-red-300"
+                  }`}
+                >
                   {toast.title}
                 </h3>
-                <p className={`text-sm mt-1 ${toast.type === "success" ? "text-green-700 dark:text-green-200" : "text-red-700 dark:text-red-200"}`}>
+                <p
+                  className={`text-sm mt-1 ${
+                    toast.type === "success"
+                      ? "text-green-700 dark:text-green-200"
+                      : "text-red-700 dark:text-red-200"
+                  }`}
+                >
                   {toast.message}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={hideToast}
                 className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                <X className={`h-5 w-5 ${toast.type === "success" ? "text-green-500" : "text-red-500"}`} />
+                <X
+                  className={`h-5 w-5 ${
+                    toast.type === "success" ? "text-green-500" : "text-red-500"
+                  }`}
+                />
               </button>
             </div>
           </motion.div>
@@ -205,12 +236,21 @@ function Newsletter() {
               />
             </motion.div>
 
-            <motion.div className="w-full md:w-3/5 flex flex-col" variants={fadeUp}>
+            <motion.div
+              className="w-full md:w-3/5 flex flex-col"
+              variants={fadeUp}
+            >
               <motion.p
                 className="text-base md:text-lg lg:text-normal text-gray-700 dark:text-gray-300 mt-4 w-full lg:w-full"
                 variants={fadeUp}
               >
-                Be the first to discover new QR design trends, limited edition patterns, and exclusive tutorials for creating your own custom QR codes for apparel. Our weekly newsletter features design inspiration, promotional offers, and early access to new customization tools. Join our community of fashion-forward tech enthusiasts who express their unique style through wearable QR designs.
+                Be the first to discover new QR design trends, limited edition
+                patterns, and exclusive tutorials for creating your own custom
+                QR codes for apparel. Our weekly newsletter features design
+                inspiration, promotional offers, and early access to new
+                customization tools. Join our community of fashion-forward tech
+                enthusiasts who express their unique style through wearable QR
+                designs.
               </motion.p>
 
               <motion.div
@@ -244,7 +284,9 @@ function Newsletter() {
                   <Button
                     text={
                       <div className="flex items-center justify-center gap-2 cursor-pointer">
-                        <span>{isSubmitting ? "Subscribing..." : "Subscribe Now"}</span>
+                        <span>
+                          {isSubmitting ? "Subscribing..." : "Subscribe Now"}
+                        </span>
                         <Send size={16} />
                       </div>
                     }
