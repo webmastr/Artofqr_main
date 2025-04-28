@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Menu, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Button from "../../components/ui/button";
 import ModeToggle from "@/components/ModeToggle";
 import Image from "next/image";
@@ -227,14 +228,16 @@ function NavBar() {
                 },
               }}
             >
-              <Image
-                src={Logo}
-                alt="logo"
-                className="drop-shadow-md transition-all duration-300 object-contain"
-                fill
-                sizes="(max-width: 768px) (min-width:200px) 100px, 150px"
-                priority
-              />
+              <Link href="/" passHref>
+                <Image
+                  src={Logo}
+                  alt="logo"
+                  className="drop-shadow-md transition-all duration-300 object-contain"
+                  fill
+                  sizes="(max-width: 768px) (min-width:200px) 100px, 150px"
+                  priority
+                />
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -424,6 +427,7 @@ function NavBar() {
                   className="flex justify-center"
                 >
                   <Button
+                    onClick={handleButtonClick}
                     text={
                       <div className="flex items-center justify-center gap-2 px-1">
                         <span>Buy Now</span>
