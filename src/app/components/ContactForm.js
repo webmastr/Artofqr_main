@@ -41,21 +41,21 @@ function ContactFormSection() {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email";
     }
-    
+
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -63,26 +63,31 @@ function ContactFormSection() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setFormStatus({
       isSubmitting: true,
       isSubmitted: false,
       isSuccess: false,
       message: "",
     });
-    
+
     try {
-      const response = await axios.post('/api/contact', formData);
-      
+      // Updated endpoint to match the required URL
+      const response = await axios.post(
+        "https://artqr-backend.vercel.app/contact/SubmitContact",
+        formData
+      );
+
       setFormStatus({
         isSubmitting: false,
         isSubmitted: true,
         isSuccess: true,
-        message: response.data.message || "Your message has been sent successfully!",
+        message:
+          response.data.message || "Your message has been sent successfully!",
       });
       // Reset form
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -92,7 +97,9 @@ function ContactFormSection() {
         isSubmitting: false,
         isSubmitted: true,
         isSuccess: false,
-        message: error.response?.data?.error || "Failed to send message. Please try again.",
+        message:
+          error.response?.data?.error ||
+          "Failed to send message. Please try again.",
       });
     }
   };
@@ -204,8 +211,8 @@ function ContactFormSection() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={`p-4 rounded-md ${
-                      formStatus.isSuccess 
-                        ? "bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800" 
+                      formStatus.isSuccess
+                        ? "bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800"
                         : "bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800"
                     }`}
                   >
@@ -240,14 +247,18 @@ function ContactFormSection() {
                         onChange={handleChange}
                         placeholder="Your Name"
                         className={`p-3 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-800/80 focus:border-purple-500 dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:focus:ring-purple-400/20 transition-all duration-300 ${
-                          errors.name ? "border-red-500 dark:border-red-500" : ""
+                          errors.name
+                            ? "border-red-500 dark:border-red-500"
+                            : ""
                         }`}
                       />
                       {errors.name && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.name}
+                        </p>
                       )}
                     </motion.div>
-                    
+
                     <motion.div variants={formFieldVariants}>
                       <Input
                         type="email"
@@ -256,14 +267,18 @@ function ContactFormSection() {
                         onChange={handleChange}
                         placeholder="Email Address"
                         className={`p-3 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-800/80 focus:border-purple-500 dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:focus:ring-purple-400/20 transition-all duration-300 ${
-                          errors.email ? "border-red-500 dark:border-red-500" : ""
+                          errors.email
+                            ? "border-red-500 dark:border-red-500"
+                            : ""
                         }`}
                       />
                       {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </p>
                       )}
                     </motion.div>
-                    
+
                     <motion.div variants={formFieldVariants}>
                       <Input
                         type="text"
@@ -282,11 +297,15 @@ function ContactFormSection() {
                         onChange={handleChange}
                         placeholder="Tell us about your QR code design idea or question"
                         className={`p-3 rounded-md min-h-32 border-gray-200 dark:border-gray-700 dark:bg-gray-800/80 focus:border-purple-500 dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:focus:ring-purple-400/20 transition-all duration-300 ${
-                          errors.message ? "border-red-500 dark:border-red-500" : ""
+                          errors.message
+                            ? "border-red-500 dark:border-red-500"
+                            : ""
                         }`}
                       />
                       {errors.message && (
-                        <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.message}
+                        </p>
                       )}
                     </motion.div>
                   </motion.div>
@@ -294,36 +313,38 @@ function ContactFormSection() {
                   {/* Submit Button */}
                   <motion.div
                     variants={fadeUp}
-                    whileHover={!formStatus.isSubmitting ? {
-                      scale: 1.03,
-                      transition: {
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 20,
-                      },
-                    } : {}}
+                    whileHover={
+                      !formStatus.isSubmitting
+                        ? {
+                            scale: 1.03,
+                            transition: {
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 20,
+                            },
+                          }
+                        : {}
+                    }
                     whileTap={!formStatus.isSubmitting ? { scale: 0.98 } : {}}
                   >
-                    <Button
+                    {/* Replace the Button component with a standard button */}
+                    <button
                       type="submit"
                       disabled={formStatus.isSubmitting}
-                      text={
-                        <div className="flex items-center justify-center gap-2">
-                          {formStatus.isSubmitting ? (
-                            <>
-                              <Loader size={18} className="animate-spin" />
-                              <span>Sending...</span>
-                            </>
-                          ) : (
-                            <>
-                              <MessageSquare size={18} />
-                              <span>Send Message</span>
-                            </>
-                          )}
-                        </div>
-                      }
                       className="w-full h-12 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-500 dark:hover:from-blue-500 dark:hover:to-purple-400 text-white shadow-lg rounded-md transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
-                    />
+                    >
+                      {formStatus.isSubmitting ? (
+                        <>
+                          <Loader size={18} className="animate-spin" />
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <MessageSquare size={18} />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
                   </motion.div>
                 </motion.form>
               </div>
