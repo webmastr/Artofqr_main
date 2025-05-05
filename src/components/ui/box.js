@@ -23,7 +23,7 @@ const Box = ({
   };
 
   const handleButtonClick = () => {
-    router.push("/text-to-graphics"); // Navigate to the text-to-qr page
+    router.push("/text-to-graphics"); // Navigate to the text-to-Diamond QR page
   };
 
   return (

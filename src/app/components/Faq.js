@@ -49,7 +49,7 @@ function FAQSection() {
 
     try {
       const response = await fetch(
-        "https://artqr-backend.vercel.app/newsletter/submit-user-info",
+        "https://artDiamond QR-backend.vercel.app/newsletter/submit-user-info",
         {
           method: "POST",
           headers: {
@@ -145,19 +145,19 @@ function FAQSection() {
   // FAQ data
   const faqItems = [
     {
-      question: "How do Diamond QR on clothing work?",
+      question: "How do Diamond Diamond QR on clothing work?",
       answer:
-        "Diamond QR are printed using high-quality, durable ink that withstands washing and wear. When scanned with any smartphone camera, they direct to your customized digital profile, website, or social media page of your choice.",
+        "Diamond Diamond QR are printed using high-quality, durable ink that withstands washing and wear. When scanned with any smartphone camera, they direct to your customized digital profile, website, or social media page of your choice.",
     },
     {
-      question: "Are the Diamond QR washable?",
+      question: "Are the Diamond Diamond QR washable?",
       answer:
-        "Yes! Diamond QR are printed with specialized ink that remains scannable after multiple wash cycles. We recommend washing inside-out with cold water and avoiding harsh bleaching agents to maximize longevity.",
+        "Yes! Diamond Diamond QR are printed with specialized ink that remains scannable after multiple wash cycles. We recommend washing inside-out with cold water and avoiding harsh bleaching agents to maximize longevity.",
     },
     {
-      question: "Can I customize what my Diamond QR links to?",
+      question: "Can I customize what my Diamond Diamond QR links to?",
       answer:
-        "Absolutely. During checkout, you'll create an account that allows you to set and update your Diamond QR destination anytime. Link to your portfolio, social media, business page, or even create a special landing page.",
+        "Absolutely. During checkout, you'll create an account that allows you to set and update your Diamond Diamond QR destination anytime. Link to your portfolio, social media, business page, or even create a special landing page.",
     },
     {
       question: "What materials are your products made from?",
@@ -170,9 +170,9 @@ function FAQSection() {
         "Yes, we ship worldwide! International orders typically arrive within 7-14 business days. Shipping costs vary by location and will be calculated at checkout.",
     },
     {
-      question: "What if my Diamond QR stops working?",
+      question: "What if my Diamond Diamond QR stops working?",
       answer:
-        "We stand behind our products with a lifetime Diamond QR guarantee. If your code ever stops scanning properly due to normal wear and tear, we'll replace your item free of charge.",
+        "We stand behind our products with a lifetime Diamond Diamond QR guarantee. If your code ever stops scanning properly due to normal wear and tear, we'll replace your item free of charge.",
     },
   ];
 
@@ -209,8 +209,8 @@ function FAQSection() {
             className="text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto cursor-pointer"
             variants={fadeUp}
           >
-            Everything you need to know about our QR code fashion products and
-            services.
+            Everything you need to know about our Diamond QR code fashion
+            products and services.
           </motion.p>
         </motion.div>
 

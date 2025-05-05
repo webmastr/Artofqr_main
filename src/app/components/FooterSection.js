@@ -111,7 +111,12 @@ function FooterSection() {
   const footerLinks = [
     {
       title: "Products",
-      links: ["QR T-Shirts", "QR Hoodies", "QR Accessories", "Custom Designs"],
+      links: [
+        "Diamond QR T-Shirts",
+        "Diamond QR Hoodies",
+        "Diamond QR Accessories",
+        "Custom Designs",
+      ],
     },
     {
       title: "Resources",
@@ -140,7 +145,7 @@ function FooterSection() {
 
     try {
       const response = await fetch(
-        "https://artqr-backend.vercel.app/newsletter/create-newsletter",
+        "https://artDiamond QR-backend.vercel.app/newsletter/create-newsletter",
         {
           method: "POST",
           headers: {
@@ -194,15 +199,15 @@ function FooterSection() {
           >
             <Image
               src="/images/logo.png"
-              alt="Artofqr"
+              alt="Diamond Diamond QR"
               width={200}
               height={200}
               className="object-contain mb-4 cursor-pointer"
             />
             <p className="text-gray-700 dark:text-gray-300 mt-4 mb-6 max-w-md">
-              Create scannable QR code fashion that connects your physical style
-              to your digital presence. Stand out with functional, stylish
-              designs.
+              Create scannable Diamond QR code fashion that connects your
+              physical style to your digital presence. Stand out with
+              functional, stylish designs.
             </p>
             {/* Social Media Links */}
             <motion.div className="flex gap-3 mt-6" variants={staggerContainer}>
@@ -264,7 +269,7 @@ function FooterSection() {
               Subscribe to our newsletter
             </h3>
             <p className="text-gray-700 dark:text-gray-300">
-              Get the latest news and updates on QR fashion trends.
+              Get the latest news and updates on Diamond QR fashion trends.
             </p>
           </div>
           <form
@@ -307,7 +312,8 @@ function FooterSection() {
           variants={fadeIn}
         >
           <p className="text-gray-700 dark:text-gray-300 text-center md:text-left cursor-pointer">
-            © {new Date().getFullYear()} Artofqr. All rights reserved.
+            © {new Date().getFullYear()} Diamond Diamond QR. All rights
+            reserved.
           </p>
 
           <div className="flex flex-wrap gap-6 justify-center">

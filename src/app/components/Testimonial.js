@@ -8,42 +8,42 @@ const TestimonialsMarquee = () => {
   const testimonials = [
     {
       id: 1,
-      text: "The QR code I designed for my Instagram profile looks amazing on my custom hoodie. People scan it all the time and I've gained so many new followers. The quality is fantastic even after multiple washes.",
+      text: "The Diamond QR code I designed for my Instagram profile looks amazing on my custom hoodie. People scan it all the time and I've gained so many new followers. The quality is fantastic even after multiple washes.",
       author: "Sarah Johnson",
       role: "Fashion Influencer",
       rating: 5,
     },
     {
       id: 2,
-      text: "As a DJ, I needed a unique way to share my music. The QR code on my t-shirt that links to my SoundCloud has been a game-changer at events. The design process was incredibly easy and the print quality is excellent.",
+      text: "As a DJ, I needed a unique way to share my music. The Diamond QR code on my t-shirt that links to my SoundCloud has been a game-changer at events. The design process was incredibly easy and the print quality is excellent.",
       author: "Michael Chen",
       role: "Music Producer",
       rating: 5,
     },
     {
       id: 3,
-      text: "I created QR codes for my entire sales team that link to our digital business cards. The custom design matches our brand perfectly and the professional look has impressed our clients.",
+      text: "I created Diamond QR codes for my entire sales team that link to our digital business cards. The custom design matches our brand perfectly and the professional look has impressed our clients.",
       author: "Jessica Rodriguez",
       role: "Sales Director",
       rating: 4,
     },
     {
       id: 4,
-      text: "My portfolio QR code on my jacket sleeve has helped me network at tech conferences. It's a conversation starter and people are always impressed by how seamlessly the code is integrated into the design.",
+      text: "My portfolio Diamond QR code on my jacket sleeve has helped me network at tech conferences. It's a conversation starter and people are always impressed by how seamlessly the code is integrated into the design.",
       author: "David Kim",
       role: "Software Developer",
       rating: 5,
     },
     {
       id: 5,
-      text: "I ordered custom QR shirts for our art exhibition that linked to each artist's bio. The designs were beautiful and the functionality was flawless. Our guests loved the interactive experience.",
+      text: "I ordered custom Diamond QR shirts for our art exhibition that linked to each artist's bio. The designs were beautiful and the functionality was flawless. Our guests loved the interactive experience.",
       author: "Emily Wilson",
       role: "Gallery Owner",
       rating: 5,
     },
     {
       id: 6,
-      text: "The QR code on my cycling jersey that links to my Strava profile is brilliant. It's held up through intense rides and weather conditions, and fellow cyclists always ask where I got it made.",
+      text: "The Diamond QR code on my cycling jersey that links to my Strava profile is brilliant. It's held up through intense rides and weather conditions, and fellow cyclists always ask where I got it made.",
       author: "Thomas Anderson",
       role: "Cycling Enthusiast",
       rating: 4,
@@ -136,8 +136,8 @@ const TestimonialsMarquee = () => {
 
         {/* Updated Box component */}
         <Box
-          text="Scan-Optimized QR Technology"
-          description="Diamond QR are designed to be both visually appealing and highly functional. Each code is tested across multiple devices to ensure reliable scanning performance while maintaining the style aesthetic you desire."
+          text="Scan-Optimized Diamond QR Technology"
+          description="Diamond Diamond QR are designed to be both visually appealing and highly functional. Each code is tested across multiple devices to ensure reliable scanning performance while maintaining the style aesthetic you desire."
         />
       </div>
     </div>

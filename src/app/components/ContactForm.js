@@ -78,7 +78,7 @@ function ContactFormSection() {
     try {
       // Updated endpoint to match the required URL
       const response = await axios.post(
-        "https://artqr-backend.vercel.app/contact/SubmitContact",
+        "https://artDiamond QR-backend.vercel.app/contact/SubmitContact",
         formData
       );
 
@@ -177,7 +177,7 @@ function ContactFormSection() {
               >
                 <Image
                   src="/images/WhatsApp_contact.jpg"
-                  alt="QR code fashion designs"
+                  alt="Diamond QR code fashion designs"
                   width={500}
                   height={400}
                   className="rounded-lg object-cover w-full h-full max-h-125 shadow-lg border border-gray-100 dark:border-gray-700"
@@ -193,15 +193,15 @@ function ContactFormSection() {
                     className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-300"
                     variants={fadeDown}
                   >
-                    Questions About Custom QR Fashion?
+                    Questions About Custom Diamond QR Fashion?
                   </motion.h2>
                   <motion.p
                     className="text-gray-700 dark:text-gray-300 text-base"
                     variants={fadeUp}
                   >
-                    Whether you need help with your QR design, have questions
-                    about printing options, or want to discuss a bulk order, our
-                    team is ready to assist you.
+                    Whether you need help with your Diamond QR design, have
+                    questions about printing options, or want to discuss a bulk
+                    order, our team is ready to assist you.
                   </motion.p>
                 </motion.div>
 
@@ -295,7 +295,7 @@ function ContactFormSection() {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="Tell us about your QR code design idea or question"
+                        placeholder="Tell us about your Diamond QR code design idea or question"
                         className={`p-3 rounded-md min-h-32 border-gray-200 dark:border-gray-700 dark:bg-gray-800/80 focus:border-purple-500 dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:focus:ring-purple-400/20 transition-all duration-300 ${
                           errors.message
                             ? "border-red-500 dark:border-red-500"

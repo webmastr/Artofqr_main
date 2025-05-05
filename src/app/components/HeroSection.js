@@ -144,7 +144,7 @@ const HeroSection = () => {
                     text={
                       <div className="flex items-center justify-center gap-2 cursor-pointer">
                         <Wand2 size={18} className="cursor-pointer" />
-                        <span>Design Your QR</span>
+                        <span>Design Your Diamond QR</span>
                         <motion.div
                           animate={{
                             x: [0, 5, 0],

@@ -37,7 +37,7 @@ export const lettersPerRowMapLeft = {
   34: [5, 10, 16, 22, 28],
   35: [5, 11, 17, 23, 29],
   36: [6, 12, 18, 24, 30],
-}
+};
 export const lettersPerRowMapLeft_withQr = {
   1: [],
   2: [],
@@ -75,7 +75,7 @@ export const lettersPerRowMapLeft_withQr = {
   34: [8, 16, 25],
   35: [8, 17, 26],
   36: [9, 18, 27],
-}
+};
 
 export const lettersPerRowMapCenter = {
   1: [],
@@ -114,7 +114,7 @@ export const lettersPerRowMapCenter = {
   34: [4, 10, 17, 26],
   35: [4, 10, 17, 26],
   36: [4, 10, 17, 26],
-}
+};
 
 export const lettersPerRowMapCenter_withQr = {
   1: [],
@@ -153,10 +153,10 @@ export const lettersPerRowMapCenter_withQr = {
   34: [4, 10, 17, 26],
   35: [4, 10, 17, 26],
   36: [4, 10, 17, 26],
-}
+};
 
 export const Megafont = localFont({
   src: "./Megafont.ttf",
-  variable: "--font-custom", 
+  variable: "--font-custom",
   display: "swap",
 });

@@ -137,7 +137,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
       const productIds = cart.map((item) => item.product_id || "");
 
       const response = await axios.post(
-        `https://artqr-backend.vercel.app/api/validate-coupon/${couponCode}`,
+        `https://artDiamond QR-backend.vercel.app/api/validate-coupon/${couponCode}`,
         {
           cartTotal: cartTotal,
           productIds: productIds,
@@ -207,7 +207,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
 
       // Call your API to get shipping rates
       const response = await axios.post(
-        "https://artqr-backend.vercel.app/uploadImage/shipping/rates",
+        "https://artDiamond QR-backend.vercel.app/uploadImage/shipping/rates",
         {
           recipient,
           items,
@@ -291,7 +291,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
 
       // Call Stripe checkout endpoint
       const response = await axios.post(
-        "https://artqr-backend.vercel.app/stripe/create-checkout-session",
+        "https://artDiamond QR-backend.vercel.app/stripe/create-checkout-session",
         {
           customer,
           items: lineItems,

@@ -74,10 +74,10 @@ export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Terms of Service | Art of QR</title>
+        <title>Terms of Service | Art of Diamond QR</title>
         <meta
           name="description"
-          content="Terms of Service for Art of QR's website and services."
+          content="Terms of Service for Art of Diamond QR's website and services."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -150,21 +150,21 @@ export default function TermsOfService() {
                   </h2>
                   <div className="space-y-4 text-gray-700">
                     <p>
-                      We are Art of QR ("Company," "we," "us," "our"). We
-                      operate the website ArtofQR.com (the "Site"), as well as
-                      any other related products and services that refer or link
-                      to these legal terms (the "Legal Terms") (collectively,
-                      the "Services").
+                      We are Art of Diamond QR ("Company," "we," "us," "our").
+                      We operate the website Diamond Diamond QR.com (the
+                      "Site"), as well as any other related products and
+                      services that refer or link to these legal terms (the
+                      "Legal Terms") (collectively, the "Services").
                     </p>
                     <p>
                       These Legal Terms constitute a legally binding agreement
                       made between you, whether personally or on behalf of an
-                      entity ("you"), and Art of QR, concerning your access to
-                      and use of the Services. You agree that by accessing the
-                      Services, you have read, understood, and agreed to be
-                      bound by all of these Legal Terms. IF YOU DO NOT AGREE
-                      WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY
-                      PROHIBITED FROM USING THE SERVICES AND YOU MUST
+                      entity ("you"), and Art of Diamond QR, concerning your
+                      access to and use of the Services. You agree that by
+                      accessing the Services, you have read, understood, and
+                      agreed to be bound by all of these Legal Terms. IF YOU DO
+                      NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE
+                      EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST
                       DISCONTINUE USE IMMEDIATELY.
                     </p>
                     <p>
@@ -280,13 +280,13 @@ export default function TermsOfService() {
                       If you wish to make any use of the Services, Content, or
                       Marks other than as set out in this section or elsewhere
                       in our Legal Terms, please address your request to:
-                      info@artofqr.com. If we ever grant you the permission to
-                      post, reproduce, or publicly display any part of our
-                      Services or Content, you must identify us as the owners or
-                      licensors of the Services, Content, or Marks and ensure
-                      that any copyright or proprietary notice appears or is
-                      visible on posting, reproducing, or displaying our
-                      Content.
+                      info@Diamond Diamond QR.com. If we ever grant you the
+                      permission to post, reproduce, or publicly display any
+                      part of our Services or Content, you must identify us as
+                      the owners or licensors of the Services, Content, or Marks
+                      and ensure that any copyright or proprietary notice
+                      appears or is visible on posting, reproducing, or
+                      displaying our Content.
                     </p>
                     <p>
                       We reserve all rights not expressly granted to you in and
@@ -901,7 +901,7 @@ export default function TermsOfService() {
                         href="/privacypolicy"
                         className="text-indigo-600 hover:text-indigo-800 transition-colors"
                       >
-                        ArtofQR.com/privacypolicy
+                        Diamond Diamond QR.com/privacypolicy
                       </Link>
                       . By using the Services, you agree to be bound by our
                       Privacy Policy, which is incorporated into these Legal
@@ -1325,7 +1325,8 @@ export default function TermsOfService() {
                     <h3 className="text-xl font-medium mb-2 mt-6">Support</h3>
                     <p>
                       If you have any questions or need assistance regarding our
-                      SMS communications, please email us at info@artofqr.com.
+                      SMS communications, please email us at info@Diamond
+                      Diamond QR.com.
                     </p>
                   </div>
                 </section>
@@ -1394,9 +1395,9 @@ export default function TermsOfService() {
                       Services, please contact us at:
                     </p>
                     <p>
-                      <strong>Art of QR</strong>
+                      <strong>Art of Diamond QR</strong>
                       <br />
-                      info@artofqr.com
+                      info@Diamond Diamond QR.com
                     </p>
                   </div>
                 </section>
@@ -1409,10 +1410,10 @@ export default function TermsOfService() {
                     If you have any questions about these Terms of Service,
                     please contact us at{" "}
                     <a
-                      href="mailto:info@artofqr.com"
+                      href="mailto:info@Diamond Diamond QR.com"
                       className="text-indigo-600 hover:text-indigo-800 transition-colors"
                     >
-                      info@artofqr.com
+                      info@Diamond Diamond QR.com
                     </a>
                     .
                   </p>

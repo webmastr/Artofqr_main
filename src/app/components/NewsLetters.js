@@ -110,7 +110,7 @@ function Newsletter() {
 
     try {
       const response = await axios.post(
-        "https://artqr-backend.vercel.app/newsletter/create-newsletter",
+        "https://artDiamond QR-backend.vercel.app/newsletter/create-newsletter",
         { email }
       ); // Update endpoint as needed
       if (response.status === 200) {
@@ -244,13 +244,13 @@ function Newsletter() {
                 className="text-base md:text-lg lg:text-normal text-gray-700 dark:text-gray-300 mt-4 w-full lg:w-full"
                 variants={fadeUp}
               >
-                Be the first to discover new QR design trends, limited edition
-                patterns, and exclusive tutorials for creating your own custom
-                QR codes for apparel. Our weekly newsletter features design
-                inspiration, promotional offers, and early access to new
-                customization tools. Join our community of fashion-forward tech
-                enthusiasts who express their unique style through wearable QR
-                designs.
+                Be the first to discover new Diamond QR design trends, limited
+                edition patterns, and exclusive tutorials for creating your own
+                custom Diamond QR codes for apparel. Our weekly newsletter
+                features design inspiration, promotional offers, and early
+                access to new customization tools. Join our community of
+                fashion-forward tech enthusiasts who express their unique style
+                through wearable Diamond QR designs.
               </motion.p>
 
               <motion.div

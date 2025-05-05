@@ -183,74 +183,74 @@ body {
 /* These styles can be placed in a global.css file or in a module.css file */
 
 @layer components {
-  /* QR Box Styles */
-  .qr-box {
+  /* Diamond QR Box Styles */
+  .Diamond QR-box {
     @apply relative bg-white transform rotate-45;
     line-height: 0.76;
   }
 
-  .qr-text-top {
+  .Diamond QR-text-top {
     @apply absolute top-0 right-1 rotate-180 whitespace-pre-wrap;
     word-wrap: break-word;
   }
 
-  .qr-text-bottom {
+  .Diamond QR-text-bottom {
     @apply absolute bottom-0 left-1 whitespace-pre-wrap;
     word-wrap: break-word;
   }
 
-  .qr-text-left {
+  .Diamond QR-text-left {
     @apply absolute top-1 left-0 whitespace-pre-wrap;
     writing-mode: vertical-rl;
     word-wrap: break-word;
   }
 
-  .qr-text-right {
+  .Diamond QR-text-right {
     @apply absolute bottom-1 right-0 whitespace-pre-wrap transform rotate-180;
     writing-mode: vertical-rl;
     word-wrap: break-word;
   }
 
-  .qr-text-center {
+  .Diamond QR-text-center {
     @apply absolute inset-0 m-auto flex items-center justify-center;
   }
 
   /* Centered Format */
-  .qr-box-centered {
+  .Diamond QR-box-centered {
     @apply relative bg-white transform rotate-45;
     line-height: 0.76;
   }
 
-  .qr-text-bottom-right-centered {
+  .Diamond QR-text-bottom-right-centered {
     @apply absolute inset-0 flex justify-center;
   }
 
-  .qr-text-bottom-right-centered p {
+  .Diamond QR-text-bottom-right-centered p {
     @apply mt-auto mb-1 mx-1;
   }
 
-  .qr-text-bottom-right-centered.bottom {
+  .Diamond QR-text-bottom-right-centered.bottom {
     @apply mb-0;
   }
 
-  .qr-text-bottom-right-centered.left {
+  .Diamond QR-text-bottom-right-centered.left {
     @apply rotate-90;
   }
 
-  .qr-text-bottom-right-centered.top {
+  .Diamond QR-text-bottom-right-centered.top {
     @apply rotate-180;
   }
 
-  .qr-text-bottom-right-centered.right {
+  .Diamond QR-text-bottom-right-centered.right {
     @apply -rotate-90;
   }
 
   /* Input and Button Styles */
-  .qr-input {
+  .Diamond QR-input {
     @apply w-full px-4 py-3 text-base rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200;
   }
 
-  .qr-textLength {
+  .Diamond QR-textLength {
     @apply text-sm opacity-50;
   }
 
@@ -267,11 +267,11 @@ body {
   }
 
   /* Download Buttons */
-  .qr-download-button {
+  .Diamond QR-download-button {
     @apply inline-flex items-center px-5 py-3 bg-blue-500 text-white rounded-lg shadow-md transition-all duration-200;
   }
 
-  .qr-download-button:hover {
+  .Diamond QR-download-button:hover {
     @apply bg-blue-600;
   }
 }
@@ -325,7 +325,5 @@ body {
   font-weight: bold;
 }
 .font-custom {
-  font-family: var(--font-custom); 
- 
+  font-family: var(--font-custom);
 }
-

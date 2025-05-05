@@ -74,7 +74,7 @@ function AboutWithVideoSection() {
     },
   };
   const handleButtonClick = () => {
-    router.push("/text-to-graphics"); // Navigate to the text-to-qr page
+    router.push("/text-to-graphics"); // Navigate to the text-to-Diamond QR page
   };
 
   return (
@@ -113,9 +113,9 @@ function AboutWithVideoSection() {
                     variants={fadeUp}
                   >
                     Every piece has layers. You see a pattern, a shape. Look
-                    closer—it&apos;s a message. Add a QR code, and suddenly,
-                    your art becomes a gateway to your world. A link to your
-                    work, your story, your next big idea.
+                    closer—it&apos;s a message. Add a Diamond QR code, and
+                    suddenly, your art becomes a gateway to your world. A link
+                    to your work, your story, your next big idea.
                   </motion.p>
 
                   <motion.div className="mt-2 sm:mt-4" variants={fadeUp}>
@@ -167,7 +167,7 @@ function AboutWithVideoSection() {
                   <div className="relative w-full h-[250px] sm:h-[300px] md:h-[250px] lg:h-[300px] overflow-hidden rounded-xl shadow-2xl border">
                     <Image
                       src="/images/about_img.png"
-                      alt="QR Design Process Video"
+                      alt="Diamond QR Design Process Video"
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
@@ -217,7 +217,7 @@ function AboutWithVideoSection() {
           variants={staggerContainer}
         >
           <motion.div variants={fadeDown}>
-            {/* <Header subtitle="About QRWear" /> */}
+            {/* <Header subtitle="About Diamond QRWear" /> */}
           </motion.div>
 
           <div className="mt-8 md:mt-12">
@@ -269,10 +269,11 @@ function AboutWithVideoSection() {
                 <p className="text-gray-700 dark:text-gray-300 text-base relative">
                   Community of designers, engineers, typographers, and
                   enthusiasts that bring you art that you can love. The purpose
-                  of ArtofQR.com is to build a community for people to express
-                  themselves without becoming a logo-wearing billboard. By
-                  making words into art we take what&apos;s important to us and
-                  allow it to have form. It&apos;s not branding, it&apos;s style
+                  of Diamond Diamond QR.com is to build a community for people
+                  to express themselves without becoming a logo-wearing
+                  billboard. By making words into art we take what&apos;s
+                  important to us and allow it to have form. It&apos;s not
+                  branding, it&apos;s style
                 </p>
               </motion.div>
 

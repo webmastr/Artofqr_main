@@ -121,8 +121,8 @@ export default function BubblePopGame() {
       }
 
       // Generate coupon code
-      const couponChars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let coupon = "QR";
+      const couponChars = "ABCDEFGHJKLMNPDiamond QRSTUVWXYZ23456789";
+      let coupon = "Diamond QR";
       for (let i = 0; i < 6; i++) {
         coupon += couponChars.charAt(
           Math.floor(Math.random() * couponChars.length)
@@ -223,7 +223,7 @@ export default function BubblePopGame() {
             </h3>
             <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
               Pop colorful bubbles to release stress and earn exclusive
-              discounts for your QR fashion items!
+              discounts for your Diamond QR fashion items!
             </p>
           </motion.div>
 
@@ -365,7 +365,8 @@ export default function BubblePopGame() {
       <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">
         <Heart size={14} className="mr-1 text-pink-500" />
         <span>
-          Take a moment to relax while shopping for your custom QR fashion!
+          Take a moment to relax while shopping for your custom Diamond QR
+          fashion!
         </span>
       </div>
     </div>
