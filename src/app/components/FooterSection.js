@@ -1,12 +1,85 @@
 "use client";
-
-import React from "react";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Separator } from "../../components/ui/separator";
-import { motion } from "framer-motion";
-import { Github, Twitter, Instagram, Linkedin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Github,
+  Twitter,
+  Instagram,
+  Linkedin,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
+
+// Tooltip Component
+const SubscriptionTooltip = ({ message, type, show }) => {
+  if (!show) return null;
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className={`absolute -top-12 left-0 right-0 mx-auto max-w-xs p-3 rounded-md shadow-lg flex items-center gap-2 ${
+            type === "success"
+              ? "bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800"
+              : "bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800"
+          }`}
+        >
+          {type === "success" ? (
+            <CheckCircle
+              className="text-green-500 dark:text-green-400"
+              size={16}
+            />
+          ) : (
+            <AlertCircle className="text-red-500 dark:text-red-400" size={16} />
+          )}
+          <span
+            className={`text-sm ${
+              type === "success"
+                ? "text-green-700 dark:text-green-300"
+                : "text-red-700 dark:text-red-300"
+            }`}
+          >
+            {message}
+          </span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 function FooterSection() {
+  // State for email input and subscription status
+  const [email, setEmail] = useState("");
+  const [subscriptionStatus, setSubscriptionStatus] = useState({
+    message: "",
+    type: "", // "success" or "error"
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  // Auto-hide tooltip after success
+  useEffect(() => {
+    if (subscriptionStatus.type === "success" && subscriptionStatus.message) {
+      setShowTooltip(true);
+      const timer = setTimeout(() => {
+        setShowTooltip(false);
+        // Clear the message after the tooltip disappears
+        setTimeout(() => {
+          setSubscriptionStatus({ message: "", type: "" });
+        }, 300);
+      }, 5000);
+      return () => clearTimeout(timer);
+    } else if (subscriptionStatus.message) {
+      setShowTooltip(true);
+    }
+  }, [subscriptionStatus]);
+
   // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -49,6 +122,57 @@ function FooterSection() {
       links: ["About Us", "Contact", "Careers", "Press Kit"],
     },
   ];
+
+  // Newsletter subscription handler
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+
+    // Basic email validation
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      setSubscriptionStatus({
+        message: "Please enter a valid email address",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        "https://artqr-backend.vercel.app/newsletter/create-newsletter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubscriptionStatus({
+          message: "Successfully subscribed to our newsletter!",
+          type: "success",
+        });
+        setEmail("");
+      } else {
+        setSubscriptionStatus({
+          message: data.message || "Something went wrong. Please try again.",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      setSubscriptionStatus({
+        message: "Failed to connect to the server. Please try again later.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <motion.section
@@ -143,16 +267,36 @@ function FooterSection() {
               Get the latest news and updates on QR fashion trends.
             </p>
           </div>
-          <div className="flex w-full md:w-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="p-3 rounded-l-md border border-gray-200 dark:border-gray-700 dark:bg-gray-800 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 w-full md:w-64 cursor-pointer"
+          <form
+            onSubmit={handleSubscribe}
+            className="flex flex-col w-full md:w-auto relative"
+          >
+            <div className="flex w-full">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                className="p-3 rounded-l-md border border-gray-200 dark:border-gray-700 dark:bg-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 w-full md:w-64"
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-500 text-white px-4 py-2 rounded-r-md transition-all duration-300 ${
+                  isLoading ? "opacity-70 cursor-not-allowed" : "cursor-pointer"
+                }`}
+              >
+                {isLoading ? "Subscribing..." : "Subscribe"}
+              </button>
+            </div>
+
+            {/* Tooltip */}
+            <SubscriptionTooltip
+              message={subscriptionStatus.message}
+              type={subscriptionStatus.type}
+              show={showTooltip}
             />
-            <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-500 text-white px-4 py-2 rounded-r-md transition-all duration-300 cursor-pointer">
-              Subscribe
-            </button>
-          </div>
+          </form>
         </motion.div>
 
         <Separator className="bg-gray-200 dark:bg-gray-800" />
@@ -167,18 +311,19 @@ function FooterSection() {
           </p>
 
           <div className="flex flex-wrap gap-6 justify-center">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
-              (item, index) => (
-                <motion.a
-                  key={index}
-                  href="#"
+            {[
+              { label: "Privacy Policy", href: "/privacy-policy" },
+              { label: "Terms of Service", href: "/terms-conditions" },
+            ].map((item, index) => (
+              <motion.div key={index} whileHover={{ scale: 1.05 }}>
+                <Link
+                  href={item.href}
                   className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 text-sm cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
                 >
-                  {item}
-                </motion.a>
-              )
-            )}
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>

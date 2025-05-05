@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "@/components/ui/button";
-import bannerImage from "../../../public/images/freepik.jpg";
 import { ArrowRight, Wand2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isInView, setIsInView] = useState(true);
+  const videoRef = useRef(null);
+  const sectionRef = useRef(null);
   const router = useRouter();
 
+  // Handle scroll position for animations
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -21,13 +23,34 @@ const HeroSection = () => {
       } else {
         setScrolled(false);
       }
+
+      // Check if video is in view
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+        setIsInView(isVisible);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Enhanced animation variants
+  // Control video playback based on visibility
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isInView) {
+        videoRef.current.play().catch((error) => {
+          console.log("Video play failed:", error);
+        });
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isInView]);
+
+  // Animation variants
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -66,11 +89,11 @@ const HeroSection = () => {
   };
 
   const handleButtonClick = () => {
-    router.push("/text-to-graphics"); // Navigate to the text-to-qr page
+    router.push("/text-to-graphics");
   };
 
   return (
-    <div id="hero" className="w-full overflow-hidden">
+    <div id="hero" className="w-full overflow-hidden" ref={sectionRef}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
@@ -146,7 +169,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right column - Image */}
+          {/* Right column - Video */}
           <motion.div
             className="order-1 lg:order-2 flex justify-center cursor-pointer"
             variants={fadeDown}
@@ -167,16 +190,20 @@ const HeroSection = () => {
             >
               {/* Using aspect ratio instead of fixed height for responsiveness */}
               <div className="relative w-full pb-[75%] sm:pb-[80%] md:pb-[75%] lg:pb-[70%]">
-                <Image
-                  src={bannerImage}
-                  alt="QR Fashion Showcase"
-                  className="object-cover"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                  priority
-                />
+                <video
+                  ref={videoRef}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  {/* Replace with your video URL */}
+                  <source src="/images/banner original.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
 
-                {/* Image overlay with gradient */}
+                {/* Video overlay with gradient */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"
                   initial={{ opacity: 0 }}

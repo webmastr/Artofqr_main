@@ -96,7 +96,7 @@ const Box = ({
               onClick={handleButtonClick}
               text={
                 <div className="flex items-center justify-center gap-2">
-                  <span>Buy Now</span>
+                  <span>Create Now</span>
                   <motion.div
                     animate={{
                       x: [0, 5, 0],

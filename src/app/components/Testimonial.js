@@ -137,7 +137,7 @@ const TestimonialsMarquee = () => {
         {/* Updated Box component */}
         <Box
           text="Scan-Optimized QR Technology"
-          description="Our QR codes are designed to be both visually appealing and highly functional. Each code is tested across multiple devices to ensure reliable scanning performance while maintaining the style aesthetic you desire."
+          description="Diamond QR are designed to be both visually appealing and highly functional. Each code is tested across multiple devices to ensure reliable scanning performance while maintaining the style aesthetic you desire."
         />
       </div>
     </div>

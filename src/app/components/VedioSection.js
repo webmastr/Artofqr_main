@@ -134,7 +134,6 @@ function AboutWithVideoSection() {
                       <Button
                         text={
                           <div className="flex items-center justify-center gap-2">
-                            <Play size={18} />
                             <span>Watch How It Works</span>
                           </div>
                         }
@@ -185,7 +184,7 @@ function AboutWithVideoSection() {
                     />
 
                     {/* Play button overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    {/* <div className="absolute inset-0 flex items-center justify-center">
                       <motion.div
                         className="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center cursor-pointer"
                         whileHover={{
@@ -201,7 +200,7 @@ function AboutWithVideoSection() {
                       >
                         <Play size={30} className="text-purple-600 ml-1" />
                       </motion.div>
-                    </div>
+                    </div> */}
                   </div>
                 </motion.div>
               </motion.div>
@@ -265,13 +264,15 @@ function AboutWithVideoSection() {
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-600/20 to-blue-500/20 rounded-full blur-xl" />
 
                 <h3 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-300 mb-4 relative">
-                  Our Mission
+                  Who We Are
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300 text-base relative">
-                  To democratize personal branding by making wearable technology
-                  accessible, sustainable, and stylish for everyone. We believe
-                  your clothing should work as hard as you do to tell your
-                  unique story.
+                  Community of designers, engineers, typographers, and
+                  enthusiasts that bring you art that you can love. The purpose
+                  of ArtofQR.com is to build a community for people to express
+                  themselves without becoming a logo-wearing billboard. By
+                  making words into art we take what&apos;s important to us and
+                  allow it to have form. It&apos;s not branding, it&apos;s style
                 </p>
               </motion.div>
 
@@ -288,13 +289,14 @@ function AboutWithVideoSection() {
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-600/20 to-blue-500/20 rounded-full blur-xl" />
 
                 <h3 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-300 mb-4 relative">
-                  Our Vision
+                  What&apos;s Our Vision
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300 text-base relative">
-                  A world where personal expression seamlessly integrates with
-                  digital connectivity, creating new opportunities for creators,
-                  entrepreneurs, and individuals to share their passions and
-                  build connections.
+                  To empower individuals to wear their identity and beliefs with
+                  pride—through art, not advertising. We envision a future where
+                  creativity, self-expression, and community-driven design shape
+                  how people connect and communicate, beyond brands and into
+                  something truly personal.
                 </p>
               </motion.div>
             </motion.div>
@@ -472,8 +474,8 @@ function AboutWithVideoSection() {
               >
                 Gen Z is rewriting the rules. Over half of us want to be
                 entrepreneurs, and all of us are juggling a million thoughts at
-                once. Creativity is our outlet. It&apos;ss how we process, how
-                we share, how we breathe. Our designs are made for this
+                once. Creativity is our outlet. It&apos;s how we process, how we
+                share, how we breathe. Our designs are made for this
                 mindset—quick to create, easy to share, and deeply personal.
               </motion.p>
               <motion.div

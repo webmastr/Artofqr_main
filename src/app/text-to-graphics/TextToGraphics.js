@@ -438,10 +438,10 @@ const TextToGraphics = ({
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            8-Bit Pixel Graphics Generator
+            Diamond Design and QR Generator
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Create custom pixel designs with optional QR codes for your projects
+            Create geometric designs with optional QR codes. For Free
           </p>
         </div>
 
@@ -472,7 +472,7 @@ const TextToGraphics = ({
               onClick={() => setActiveTab("editor")}
             >
               <Layout className="inline-block w-4 h-4 mr-2" />
-              Editor
+              Designer
             </button>
             <button
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
@@ -483,7 +483,7 @@ const TextToGraphics = ({
               onClick={() => setActiveTab("results")}
             >
               <Code className="inline-block w-4 h-4 mr-2" />
-              Print Results
+              Your Products
             </button>
             <button
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${

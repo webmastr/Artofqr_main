@@ -122,7 +122,7 @@ const EditorView = ({
             } text-white font-medium rounded-lg transition-colors duration-200`}
           >
             <Printer size={16} className="mr-2" />
-            Print
+            Products
           </button>
           <button
             onClick={() => navigate("/config")}
@@ -134,7 +134,6 @@ const EditorView = ({
         </div>
 
         {/* Order Button */}
-
 
         {printifyStatus && (
           <div className="mt-4 py-2 px-4 bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 rounded-lg text-sm">
@@ -150,10 +149,14 @@ const EditorView = ({
         </h2>
 
         {text.length > 0 ? (
-          <div style={customStyles.flexGraphics} className={Megafont.className} id="graphic-parent">
+          <div
+            style={customStyles.flexGraphics}
+            className={Megafont.className}
+            id="graphic-parent"
+          >
             {config.format === "center" ? (
               <div
-              className={Megafont.className}
+                className={Megafont.className}
                 ref={qrRef}
                 style={{
                   ...customStyles.qrBoxCentered,

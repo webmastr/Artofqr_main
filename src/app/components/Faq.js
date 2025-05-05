@@ -2,10 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, X } from "lucide-react";
 
 function FAQSection() {
   const [scrolled, setScrolled] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    interest: "",
+    favorite: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +30,57 @@ function FAQSection() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+    setSubmitSuccess(false);
+
+    try {
+      const response = await fetch(
+        "https://artqr-backend.vercel.app/newsletter/submit-user-info",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit information");
+      }
+
+      // Success handling
+      setSubmitSuccess(true);
+      setFormData({ name: "", interest: "", favorite: "" });
+
+      // Close modal after successful submission with slight delay for feedback
+      setTimeout(() => {
+        setShowModal(false);
+        setSubmitSuccess(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitError(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Animation variants matching hero section
   const fadeUp = {
@@ -60,22 +120,44 @@ function FAQSection() {
     },
   };
 
+  const modalVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.8,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.8,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
   // FAQ data
   const faqItems = [
     {
-      question: "How do QR codes on clothing work?",
+      question: "How do Diamond QR on clothing work?",
       answer:
-        "Our QR codes are printed using high-quality, durable ink that withstands washing and wear. When scanned with any smartphone camera, they direct to your customized digital profile, website, or social media page of your choice.",
+        "Diamond QR are printed using high-quality, durable ink that withstands washing and wear. When scanned with any smartphone camera, they direct to your customized digital profile, website, or social media page of your choice.",
     },
     {
-      question: "Are the QR codes washable?",
+      question: "Are the Diamond QR washable?",
       answer:
-        "Yes! Our QR codes are printed with specialized ink that remains scannable after multiple wash cycles. We recommend washing inside-out with cold water and avoiding harsh bleaching agents to maximize longevity.",
+        "Yes! Diamond QR are printed with specialized ink that remains scannable after multiple wash cycles. We recommend washing inside-out with cold water and avoiding harsh bleaching agents to maximize longevity.",
     },
     {
-      question: "Can I customize what my QR code links to?",
+      question: "Can I customize what my Diamond QR links to?",
       answer:
-        "Absolutely. During checkout, you'll create an account that allows you to set and update your QR code destination anytime. Link to your portfolio, social media, business page, or even create a special landing page.",
+        "Absolutely. During checkout, you'll create an account that allows you to set and update your Diamond QR destination anytime. Link to your portfolio, social media, business page, or even create a special landing page.",
     },
     {
       question: "What materials are your products made from?",
@@ -88,9 +170,9 @@ function FAQSection() {
         "Yes, we ship worldwide! International orders typically arrive within 7-14 business days. Shipping costs vary by location and will be calculated at checkout.",
     },
     {
-      question: "What if my QR code stops working?",
+      question: "What if my Diamond QR stops working?",
       answer:
-        "We stand behind our products with a lifetime QR code guarantee. If your code ever stops scanning properly due to normal wear and tear, we'll replace your item free of charge.",
+        "We stand behind our products with a lifetime Diamond QR guarantee. If your code ever stops scanning properly due to normal wear and tear, we'll replace your item free of charge.",
     },
   ];
 
@@ -199,7 +281,7 @@ function FAQSection() {
           ))}
         </motion.div>
 
-        {/* Call to Action */}
+        {/* Tell Us About You Section */}
         <motion.div
           className="text-center mt-16"
           variants={fadeUp}
@@ -207,12 +289,18 @@ function FAQSection() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.p
-            className="mb-6 text-gray-700 dark:text-gray-300 cursor-pointer"
-            variants={fadeIn}
-          >
-            Still have questions? We're here to help!
-          </motion.p>
+          <motion.div className="max-w-2xl mx-auto mb-8" variants={fadeIn}>
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+              Still have questions? We're here to help!
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300">
+              Tell us about yourself and we'll get back to you with personalized
+              assistance. Our team is ready to provide you with the information
+              you need.
+            </p>
+          </motion.div>
+
+          {/* Tell Us About You Button - centered below text */}
           <motion.div
             whileHover={{
               scale: 1.05,
@@ -222,11 +310,14 @@ function FAQSection() {
             whileTap={{ scale: 0.98 }}
             className="inline-block cursor-pointer"
           >
-            <button className="px-8 py-3 flex items-center justify-center gap-2 shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-500 text-white rounded-md font-medium transition-all duration-300 cursor-pointer">
-              <span>Contact Support</span>
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-8 py-3 flex items-center justify-center gap-2 shadow-lg bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 dark:from-purple-600 dark:to-pink-500 text-white rounded-md font-medium transition-all duration-300 cursor-pointer"
+            >
+              <span>Tell Us About You</span>
               <motion.div
                 animate={{
-                  x: [0, 5, 0],
+                  scale: [1, 1.2, 1],
                   transition: {
                     repeat: Infinity,
                     duration: 1.5,
@@ -246,13 +337,125 @@ function FAQSection() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               </motion.div>
             </button>
           </motion.div>
         </motion.div>
       </motion.section>
+
+      {/* Modal Overlay */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            className="bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-md w-full p-6 relative"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              <X size={24} />
+            </button>
+
+            <h3 className="text-2xl font-bold dark:text-white mb-6 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+              Tell Us About You
+            </h3>
+
+            {submitSuccess && (
+              <div className="mb-6 p-3 bg-green-100 border border-green-200 text-green-700 rounded-md">
+                Information submitted successfully! We'll be in touch soon.
+              </div>
+            )}
+
+            {submitError && (
+              <div className="mb-6 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md">
+                {submitError}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-4">
+                {/* Name Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                {/* Interest Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Your Interest
+                  </label>
+                  <input
+                    type="text"
+                    name="interest"
+                    value={formData.interest}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                    placeholder="Fashion, Technology, etc."
+                  />
+                </div>
+
+                {/* Favorite Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Your Favorite
+                  </label>
+                  <input
+                    type="text"
+                    name="favorite"
+                    value={formData.favorite}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                    placeholder="Color, Food, Activity, etc."
+                  />
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full mt-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-md font-medium transition-all duration-300 ${
+                  isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+                }`}
+                whileHover={
+                  !isSubmitting
+                    ? {
+                        scale: 1.02,
+                        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+                      }
+                    : {}
+                }
+                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </motion.button>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

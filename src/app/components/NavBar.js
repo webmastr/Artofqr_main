@@ -9,6 +9,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../../../public/images/logo.png";
 import { useRouter } from "next/navigation";
+
 function NavBar() {
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -156,7 +157,7 @@ function NavBar() {
     },
   };
 
-  // Logo hover animation - Fixed to use keyframes instead of spring
+  // Logo hover animation
   const logoHoverVariants = {
     hover: {
       scale: 1.05,
@@ -168,26 +169,26 @@ function NavBar() {
     },
   };
 
+  // Updated navItems array with new Design section
   const navItems = [
     { name: "Home", id: "hero" },
     { name: "About Us", id: "about" },
+    { name: "Design", id: "design" },
     { name: "Contacts", id: "contact" },
   ];
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      // Close mobile menu if open
-      if (menu) setMenu(false);
+  const handleNavItemClick = (item) => {
+    // Close mobile menu if open
+    if (menu) setMenu(false);
 
-      // Smooth scroll to element
-      window.scrollTo({
-        top: element.offsetTop - 80, // Offset for navbar height
-        behavior: "smooth",
-      });
-
+    // If the Design section is clicked, navigate to the text-to-graphics page
+    if (item.id === "design") {
+      router.push("/text-to-graphics");
+    } else {
+      // For all other items, navigate to home page with hash fragment
+      router.push(`/#${item.id}`);
       // Update active section immediately
-      setActiveSection(id);
+      setActiveSection(item.id);
     }
   };
 
@@ -259,7 +260,7 @@ function NavBar() {
                       ? "text-blue-600 dark:text-blue-400"
                       : "text-gray-700 dark:text-gray-100"
                   }`}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavItemClick(item)}
                 >
                   {item.name}
                 </motion.p>
@@ -304,7 +305,7 @@ function NavBar() {
                 onClick={handleButtonClick}
                 text={
                   <div className="flex items-center justify-center gap-2 px-1">
-                    <span>Buy Now</span>
+                    <span>Create Now</span>
                     <motion.div
                       animate={{
                         x: [0, 5, 0],
@@ -320,7 +321,7 @@ function NavBar() {
                     </motion.div>
                   </div>
                 }
-                width="w-32"
+                width="w-38"
                 height="h-10"
                 className="flex items-center justify-center shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-500 transition-all duration-300"
               />
@@ -375,7 +376,7 @@ function NavBar() {
                   custom={i}
                   variants={menuItemVariants}
                   className="mb-6 w-full text-center relative"
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavItemClick(item)}
                 >
                   <motion.div
                     whileHover={{
@@ -430,7 +431,7 @@ function NavBar() {
                     onClick={handleButtonClick}
                     text={
                       <div className="flex items-center justify-center gap-2 px-1">
-                        <span>Buy Now</span>
+                        <span>Create Now</span>
                         <motion.div
                           animate={{
                             x: [0, 5, 0],
