@@ -331,7 +331,7 @@ const TextToGraphics = ({
     textTop: {
       position: "absolute",
       top: "0px",
-      right: "4px",
+      right: "6px",
       rotate: "180deg",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
@@ -339,13 +339,13 @@ const TextToGraphics = ({
     textBottom: {
       position: "absolute",
       bottom: "0px",
-      left: "3px",
+      left: "6px",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
     },
     textLeft: {
       position: "absolute",
-      top: "3px",
+      top: "6px",
       left: "0px",
       writingMode: "vertical-rl",
       wordWrap: "break-word",
@@ -356,7 +356,7 @@ const TextToGraphics = ({
       writingMode: "vertical-rl",
       transform: "rotate(180deg)",
       textAlign: "left",
-      bottom: "3px",
+      bottom: "6px",
       right: "1px",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
