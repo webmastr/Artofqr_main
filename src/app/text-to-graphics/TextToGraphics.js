@@ -12,7 +12,7 @@ import {
   lettersPerRowMapLeft_withQr,
 } from "./help";
 import Loading from "../../components/commons/loading";
-import bwipjs from "bwip-js";
+import { QRCode } from "react-qrcode-logo";
 import {
   Download,
   Image as ImageIcon,
@@ -46,7 +46,8 @@ const TextToGraphics = ({
   const qrRef = useRef();
   const textRef = useRef();
   const [url, setUrl] = useState("");
-  const [aztecBarcode, setAztecBarcode] = useState("");
+  const [hasQRCode, setHasQRCode] = useState(false);
+  const [qrStyle, setQrStyle] = useState("squares"); // New QR style state
   const [boxSize, setBoxSize] = useState(defaultBoxSize);
   const [qrSize, setQrSize] = useState(defaultBoxSize);
   const [fontUrl, setFontUrl] = useState("");
@@ -115,7 +116,6 @@ const TextToGraphics = ({
           .toPng(graphic, { quality: 0.3 })
           .then(async (dataUrl) => {
             setSpacingBuffer(5);
-            // let data_ = dataUrl.replace("data:image/png;base64,", "");
 
             let body = {
               file_name: `${generateFileName(text)}.png`,
@@ -125,7 +125,6 @@ const TextToGraphics = ({
             try {
               const response = await axios.post(
                 "https://artqr-backend.vercel.app/uploadImage/mockups",
-
                 body
               );
               if (response.status === 200) {
@@ -133,9 +132,6 @@ const TextToGraphics = ({
                 setLoderMsg(
                   "Successfully Created mockups, Now Getting Images..."
                 );
-                // const payload = encodeURIComponent(
-                //   JSON.stringify(response.data.successful_mockups)
-                // );
 
                 const payload = JSON.stringify(
                   response.data.results.successful_mockups
@@ -175,7 +171,7 @@ const TextToGraphics = ({
   };
 
   const onChangeTextHandler = useCallback(
-    (value, aztecBarcode) => {
+    (value, hasQRCode) => {
       let inputWithoutSpace = value.replace(/\s/g, "");
       let maxLength = config.format === "center" ? 45 : 41;
       if (inputWithoutSpace.length > maxLength) return;
@@ -184,7 +180,7 @@ const TextToGraphics = ({
 
       let lettersWithoutLineBreak = inputWithoutSpace.replace("\n", "");
 
-      let lettersPerRowMap = !aztecBarcode
+      let lettersPerRowMap = !hasQRCode
         ? config.format === "center"
           ? lettersPerRowMapCenter
           : lettersPerRowMapLeft
@@ -205,29 +201,15 @@ const TextToGraphics = ({
     [config?.format, setText, setTextInput]
   );
 
-  const generateAztecBarcode = useCallback(async () => {
-    try {
-      if (!url) {
-        setAztecBarcode("");
-        return;
-      }
-
-      const canvas = document.createElement("canvas");
-
-      bwipjs.toCanvas(canvas, {
-        bcid: "azteccode",
-        text: url,
-        scale: 3,
-        width: 300,
-        height: 300,
-        includetext: false,
-      });
-      const dataUrl = canvas.toDataURL("image/png");
-      setAztecBarcode(dataUrl);
-    } catch (err) {
-      console.error("Error generating Aztec barcode:", err);
+  const generateQRCode = useCallback(() => {
+    if (url) {
+      setHasQRCode(true);
+      onChangeTextHandler(textInput, true);
+    } else {
+      setHasQRCode(false);
+      onChangeTextHandler(textInput, false);
     }
-  }, [url]);
+  }, [url, textInput, onChangeTextHandler]);
 
   useEffect(() => {
     if (!textRef.current) return;
@@ -507,7 +489,7 @@ const TextToGraphics = ({
             text={text}
             url={url}
             setUrl={setUrl}
-            generateAztecBarcode={generateAztecBarcode}
+            generateQRCode={generateQRCode}
             downloadPng={downloadPng}
             downloadSvg={downloadSvg}
             sendToPrintify={sendToPrintify}
@@ -520,8 +502,10 @@ const TextToGraphics = ({
             qrSize={qrSize}
             qrRef={qrRef}
             textRef={textRef}
-            aztecBarcode={aztecBarcode}
+            hasQRCode={hasQRCode}
             spacingBuffer={spacingBuffer}
+            qrStyle={qrStyle}
+            setQrStyle={setQrStyle}
           />
         )}
 
@@ -559,6 +543,7 @@ const TextToGraphics = ({
           addSelectedToCart={addSelectedToCart}
           loading={productLoading}
         />
+
         {/* Loading Overlay */}
         {loader && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -567,8 +552,6 @@ const TextToGraphics = ({
             </div>
           </div>
         )}
-
-        {/* New font loading overlay */}
 
         {/* Help Info */}
         <div className="mt-8 text-center">

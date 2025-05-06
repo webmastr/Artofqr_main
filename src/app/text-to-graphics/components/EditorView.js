@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Download,
   Image as ImageIcon,
@@ -7,6 +7,7 @@ import {
   Wand2,
   ShoppingCart,
 } from "lucide-react";
+import { QRCode } from "react-qrcode-logo";
 import { Megafont } from "../help";
 
 const EditorView = ({
@@ -15,7 +16,7 @@ const EditorView = ({
   text,
   url,
   setUrl,
-  generateAztecBarcode,
+  generateQRCode,
   downloadPng,
   downloadSvg,
   sendToPrintify,
@@ -28,8 +29,10 @@ const EditorView = ({
   qrSize,
   qrRef,
   textRef,
-  aztecBarcode,
+  hasQRCode,
   spacingBuffer,
+  qrStyle,
+  setQrStyle,
 }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -48,9 +51,7 @@ const EditorView = ({
             <textarea
               rows="3"
               value={textInput}
-              onChange={(e) =>
-                onChangeTextHandler(e.target.value, aztecBarcode)
-              }
+              onChange={(e) => onChangeTextHandler(e.target.value, hasQRCode)}
               placeholder="Enter your text here..."
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-200"
             />
@@ -75,7 +76,7 @@ const EditorView = ({
             />
             <button
               onClick={() => {
-                generateAztecBarcode();
+                generateQRCode();
                 onChangeTextHandler(textInput, true);
               }}
               className="inline-flex cursor-pointer items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200"
@@ -85,6 +86,47 @@ const EditorView = ({
             </button>
           </div>
         </div>
+
+        {/* QR Style Selector */}
+        {url && (
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              QR Code Style
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={() => setQrStyle("squares")}
+                className={`px-4 py-2 border ${
+                  qrStyle === "squares"
+                    ? "bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900 dark:border-blue-400 dark:text-blue-200"
+                    : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+                } rounded-lg transition-colors duration-200`}
+              >
+                Squares
+              </button>
+              <button
+                onClick={() => setQrStyle("dots")}
+                className={`px-4 py-2 border ${
+                  qrStyle === "dots"
+                    ? "bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900 dark:border-blue-400 dark:text-blue-200"
+                    : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+                } rounded-lg transition-colors duration-200`}
+              >
+                Dots
+              </button>
+              <button
+                onClick={() => setQrStyle("classy")}
+                className={`px-4 py-2 border ${
+                  qrStyle === "classy"
+                    ? "bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900 dark:border-blue-400 dark:text-blue-200"
+                    : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+                } rounded-lg transition-colors duration-200`}
+              >
+                Fluid
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3 mt-6">
@@ -201,13 +243,27 @@ const EditorView = ({
                     ...customStyles.qrTextCenter,
                     width: `${qrSize}px`,
                     height: `${qrSize}px`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {aztecBarcode && (
-                    <img
-                      src={aztecBarcode}
-                      alt="Generated QR Code"
-                      style={customStyles.qrImage}
+                  {url && (
+                    <QRCode
+                      value={url}
+                      size={qrSize}
+                      qrStyle={
+                        qrStyle === "dots"
+                          ? "dots"
+                          : qrStyle === "classy"
+                          ? "classy"
+                          : "squares"
+                      }
+                      eyeRadius={qrStyle === "classy" ? 5 : 0}
+                      quietZone={0}
+                      bgColor={"#FFFFFF"}
+                      fgColor={"#000000"}
+                      ecLevel={"H"}
                     />
                   )}
                 </div>
@@ -241,13 +297,27 @@ const EditorView = ({
                     ...customStyles.qrTextCenter,
                     width: `${qrSize}px`,
                     height: `${qrSize}px`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {aztecBarcode && (
-                    <img
-                      src={aztecBarcode}
-                      alt="Generated QR Code"
-                      style={customStyles.qrImage}
+                  {url && (
+                    <QRCode
+                      value={url}
+                      size={qrSize}
+                      qrStyle={
+                        qrStyle === "dots"
+                          ? "dots"
+                          : qrStyle === "classy"
+                          ? "classy"
+                          : "squares"
+                      }
+                      eyeRadius={qrStyle === "classy" ? 5 : 0}
+                      quietZone={0}
+                      bgColor={"#FFFFFF"}
+                      fgColor={"#000000"}
+                      ecLevel={"H"}
                     />
                   )}
                 </div>
