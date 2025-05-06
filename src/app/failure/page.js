@@ -36,19 +36,11 @@ const PaymentFailurePage = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/cart" className="w-full">
-            <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
-              <ArrowLeft size={18} className="mr-2" />
-              Return to Cart
-            </Button>
+        <Link href="/" className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg">
+            <ArrowLeft size={18} className="mr-2" />
+            Return to Home
           </Link>
 
-          <Link href="/checkout" className="w-full">
-            <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
-              <CreditCard size={18} className="mr-2" />
-              Try Again
-            </Button>
-          </Link>
         </div>
 
         <p className="mt-6 text-sm text-gray-500 dark:text-gray-500">

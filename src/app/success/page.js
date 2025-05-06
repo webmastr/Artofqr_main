@@ -77,19 +77,13 @@ const PaymentSuccessPage = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link href="/" className="w-full">
-            <button className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg">
-              <ArrowLeft size={18} className="mr-2" />
-              Return to Home
-            </button>
+          <Link href="/" className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg">
+            <ArrowLeft size={18} className="mr-2" />
+            Return to Home
           </Link>
           
-          <Link href="/orders" className="w-full">
-            <button className="w-full py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-lg transition-all duration-200 flex items-center justify-center shadow-sm hover:shadow">
-              <ShoppingBag size={18} className="mr-2" />
-              View Orders
-            </button>
-          </Link>
+          
+          
         </div>
       </div>
     </div>

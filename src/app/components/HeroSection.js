@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Button from "@/components/ui/button";
 import { ArrowRight, Wand2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
@@ -12,6 +12,8 @@ const HeroSection = () => {
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
   const router = useRouter();
+  const { scrollY } = useViewportScroll();
+  const scale = useTransform(scrollY, [0, 200], [1, 0.98]);
 
   // Handle scroll position for animations
   useEffect(() => {
@@ -177,11 +179,8 @@ const HeroSection = () => {
             <motion.div
               className="relative rounded-xl shadow-2xl border overflow-hidden w-full"
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{
-                opacity: 1,
-                scale: scrolled ? 0.98 : 1,
-                transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-              }}
+              animate={{ opacity: 1 }}
+              style={{ scale }}
               whileHover={{
                 scale: 1.02,
                 boxShadow: "0px 25px 50px rgba(0, 0, 0, 0.18)",

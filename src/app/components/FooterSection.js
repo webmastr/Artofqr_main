@@ -199,7 +199,7 @@ function FooterSection() {
           >
             <Image
               src="/images/logo.png"
-              alt="Diamond Diamond QR"
+              alt="Diamond QR"
               width={200}
               height={200}
               className="object-contain mb-4 cursor-pointer"
@@ -312,8 +312,7 @@ function FooterSection() {
           variants={fadeIn}
         >
           <p className="text-gray-700 dark:text-gray-300 text-center md:text-left cursor-pointer">
-            © {new Date().getFullYear()} Diamond Diamond QR. All rights
-            reserved.
+            © {new Date().getFullYear()} Diamond QR. All rights reserved.
           </p>
 
           <div className="flex flex-wrap gap-6 justify-center">

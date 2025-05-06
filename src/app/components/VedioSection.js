@@ -269,11 +269,11 @@ function AboutWithVideoSection() {
                 <p className="text-gray-700 dark:text-gray-300 text-base relative">
                   Community of designers, engineers, typographers, and
                   enthusiasts that bring you art that you can love. The purpose
-                  of Diamond Diamond QR.com is to build a community for people
-                  to express themselves without becoming a logo-wearing
-                  billboard. By making words into art we take what&apos;s
-                  important to us and allow it to have form. It&apos;s not
-                  branding, it&apos;s style
+                  of Diamond QR.com is to build a community for people to
+                  express themselves without becoming a logo-wearing billboard.
+                  By making words into art we take what&apos;s important to us
+                  and allow it to have form. It&apos;s not branding, it&apos;s
+                  style
                 </p>
               </motion.div>
 

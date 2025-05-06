@@ -107,7 +107,7 @@ export default function TermsOfService() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-6xl mx-auto"
+          className=" max-w-6xl mx-auto"
         >
           {/* <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Terms of Service
@@ -116,7 +116,7 @@ export default function TermsOfService() {
 
           <div className="flex flex-col md:flex-row gap-8 mt-8">
             {/* Table of Contents - Sidebar */}
-            <div className="md:w-1/3">
+            <div className="md:w-1/3 hidden md:block">
               <div className="bg-white rounded-lg shadow-md p-4 md:p-6 sticky top-24">
                 <h2 className="text-lg font-semibold mb-4 text-gray-800">
                   Table of Contents
@@ -151,10 +151,10 @@ export default function TermsOfService() {
                   <div className="space-y-4 text-gray-700">
                     <p>
                       We are Art of Diamond QR ("Company," "we," "us," "our").
-                      We operate the website Diamond Diamond QR.com (the
-                      "Site"), as well as any other related products and
-                      services that refer or link to these legal terms (the
-                      "Legal Terms") (collectively, the "Services").
+                      We operate the website Diamond QR.com (the "Site"), as
+                      well as any other related products and services that refer
+                      or link to these legal terms (the "Legal Terms")
+                      (collectively, the "Services").
                     </p>
                     <p>
                       These Legal Terms constitute a legally binding agreement
@@ -280,13 +280,13 @@ export default function TermsOfService() {
                       If you wish to make any use of the Services, Content, or
                       Marks other than as set out in this section or elsewhere
                       in our Legal Terms, please address your request to:
-                      info@Diamond Diamond QR.com. If we ever grant you the
-                      permission to post, reproduce, or publicly display any
-                      part of our Services or Content, you must identify us as
-                      the owners or licensors of the Services, Content, or Marks
-                      and ensure that any copyright or proprietary notice
-                      appears or is visible on posting, reproducing, or
-                      displaying our Content.
+                      info@Diamond QR.com. If we ever grant you the permission
+                      to post, reproduce, or publicly display any part of our
+                      Services or Content, you must identify us as the owners or
+                      licensors of the Services, Content, or Marks and ensure
+                      that any copyright or proprietary notice appears or is
+                      visible on posting, reproducing, or displaying our
+                      Content.
                     </p>
                     <p>
                       We reserve all rights not expressly granted to you in and
@@ -901,7 +901,7 @@ export default function TermsOfService() {
                         href="/privacypolicy"
                         className="text-indigo-600 hover:text-indigo-800 transition-colors"
                       >
-                        Diamond Diamond QR.com/privacypolicy
+                        Diamond QR.com/privacypolicy
                       </Link>
                       . By using the Services, you agree to be bound by our
                       Privacy Policy, which is incorporated into these Legal
@@ -1397,7 +1397,7 @@ export default function TermsOfService() {
                     <p>
                       <strong>Art of Diamond QR</strong>
                       <br />
-                      info@Diamond Diamond QR.com
+                      info@Diamond QR.com
                     </p>
                   </div>
                 </section>

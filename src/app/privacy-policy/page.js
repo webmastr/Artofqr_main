@@ -20,6 +20,7 @@ export default function PrivacyPolicy() {
   }, []);
 
   const scrollToTop = () => {
+    
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -78,11 +79,8 @@ export default function PrivacyPolicy() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Head>
-        <title>Privacy Policy | Diamond Diamond QR.com</title>
-        <meta
-          name="description"
-          content="Privacy Policy for Diamond Diamond QR.com"
-        />
+        <title>Privacy Policy | Diamond QR.com</title>
+        <meta name="description" content="Privacy Policy for Diamond QR.com" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -108,7 +106,7 @@ export default function PrivacyPolicy() {
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation */}
         <motion.div
-          className="md:w-1/4 bg-white p-6 rounded-lg shadow-sm sticky top-8 h-fit"
+          className="hidden md:block md:w-1/4 bg-white p-6 rounded-lg shadow-sm sticky top-8 h-fit"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -150,15 +148,15 @@ export default function PrivacyPolicy() {
               PRIVACY NOTICE
             </h2>
             <p className="text-gray-700 mb-6">
-              This privacy notice for Diamond Diamond QR.com ("Company," "we,"
-              "us," or "our"), describes how and why we might collect, store,
-              use, and/or share ("process") your information when you use our
-              services ("Services"), such as when you:
+              This privacy notice for Diamond QR.com ("Company," "we," "us," or
+              "our"), describes how and why we might collect, store, use, and/or
+              share ("process") your information when you use our services
+              ("Services"), such as when you:
             </p>
             <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">
               <li>
-                Visit our website at https://Diamond Diamond QR.com, or any
-                website of ours that links to this privacy notice
+                Visit our website at https://Diamond QR.com, or any website of
+                ours that links to this privacy notice
               </li>
               <li>
                 Use our application(s), or any other application of ours that
@@ -175,7 +173,7 @@ export default function PrivacyPolicy() {
                 understand your privacy rights and choices. If you do not agree
                 with our policies and practices, please do not use our Services.
                 If you still have any questions or concerns, please contact us
-                at info@Diamond Diamond QR.com.
+                at info@Diamond QR.com.
               </p>
             </div>
           </motion.section>
@@ -956,20 +954,20 @@ export default function PrivacyPolicy() {
               with European data protection laws and regulations.
             </p>
             <p className="text-gray-700 mb-4">
-              <strong>Binding Corporate Rules:</strong> Diamond Diamond QR.com
-              adheres to and complies with the Privacy Shield Principles when
-              processing personal information from the EU, UK, or Switzerland.
-              If we have received your personal information in the United States
-              and subsequently transfer that information to a third party acting
-              as our agent, and such third party agent processes your personal
+              <strong>Binding Corporate Rules:</strong> Diamond QR.com adheres
+              to and complies with the Privacy Shield Principles when processing
+              personal information from the EU, UK, or Switzerland. If we have
+              received your personal information in the United States and
+              subsequently transfer that information to a third party acting as
+              our agent, and such third party agent processes your personal
               information in a manner inconsistent with the Privacy Shield
               Principles, we will remain liable unless we can prove we are not
               responsible for the event giving rise to the damage.
             </p>
             <p className="text-gray-700 mb-4">
               With respect to personal information received or transferred
-              pursuant to the Privacy Shield Framework, Diamond Diamond QR.com
-              is subject to the investigatory and enforcement powers of the US
+              pursuant to the Privacy Shield Framework, Diamond QR.com is
+              subject to the investigatory and enforcement powers of the US
               Federal Trade Commission ("FTC"). In certain situations, we may be
               required to disclose personal information in response to lawful
               requests by public authorities, including to meet national
@@ -978,21 +976,20 @@ export default function PrivacyPolicy() {
             <ul className="list-disc pl-6 text-gray-700 mb-4">
               <li className="mb-2">
                 <strong>WHAT INFORMATION DO WE COLLECT?</strong> To learn more
-                about the types of personal data Diamond Diamond QR.com
-                collects.
+                about the types of personal data Diamond QR.com collects.
               </li>
               <li className="mb-2">
                 <strong>HOW DO WE PROCESS YOUR INFORMATION?</strong> To learn
-                more about the purposes for which Diamond Diamond QR.com
-                collects and uses personal information about you.
+                more about the purposes for which Diamond QR.com collects and
+                uses personal information about you.
               </li>
               <li className="mb-2">
                 <strong>
                   WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?
                 </strong>{" "}
                 To learn more about the type or identity of third parties to
-                which Diamond Diamond QR.com discloses personal information, and
-                the purposes for which we do so.
+                which Diamond QR.com discloses personal information, and the
+                purposes for which we do so.
               </li>
               <li className="mb-2">
                 <strong>WHAT ARE YOUR PRIVACY RIGHTS?</strong> To learn more
@@ -1301,7 +1298,7 @@ export default function PrivacyPolicy() {
               in the past twelve (12) months:
             </p>
 
-            <div className="overflow-x-auto mb-6">
+            <div className="overflow-x-auto mb-6 hidden md:block">
               <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead className="bg-gray-50">
                   <tr>
@@ -1476,8 +1473,8 @@ export default function PrivacyPolicy() {
               How do we use and share your personal information?
             </h3>
             <p className="text-gray-700 mb-4">
-              Diamond Diamond QR.com collects and shares your personal
-              information through:
+              Diamond QR.com collects and shares your personal information
+              through:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-700">
               <li>Targeting cookies/Marketing cookies</li>
@@ -1737,7 +1734,7 @@ export default function PrivacyPolicy() {
             </p>
             <p className="text-gray-700 mb-4">
               The information we collect, use, and disclose about you will vary
-              depending on how you interact with Diamond Diamond QR.com and our
+              depending on how you interact with Diamond QR.com and our
               Services. To find out more, please visit the following sections
               above:
             </p>
@@ -1832,7 +1829,7 @@ export default function PrivacyPolicy() {
             </h2>
             <p className="text-gray-700 mb-4">
               If you have questions or comments about this notice, you may
-              contact us at info@Diamond Diamond QR.com
+              contact us at info@Diamond QR.com
             </p>
           </motion.section>
 
@@ -1876,7 +1873,7 @@ export default function PrivacyPolicy() {
 
       <footer className="bg-gray-100 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 text-center text-gray-600">
-          <p>© 2025 Diamond Diamond QR.com. All rights reserved.</p>
+          <p>© 2025 Diamond QR.com. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -137,7 +137,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
       const productIds = cart.map((item) => item.product_id || "");
 
       const response = await axios.post(
-        `https://artDiamond QR-backend.vercel.app/api/validate-coupon/${couponCode}`,
+        `https://artqr-backend.vercel.app/api/validate-coupon/${couponCode}`,
         {
           cartTotal: cartTotal,
           productIds: productIds,
