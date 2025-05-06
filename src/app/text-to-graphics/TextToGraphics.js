@@ -227,6 +227,24 @@ const TextToGraphics = ({
       return;
     }
 
+    // Special case for exactly 4 characters with QR code
+    if (text.length === 4) {
+      // Calculate initial size based on your existing logic
+      if (config?.format === "center") {
+        newSize = Math.max(defaultBoxSize, textWidth + 20 + spacingBuffer);
+      } else {
+        newSize = Math.max(defaultBoxSize, textWidth + 15 + spacingBuffer);
+      }
+
+      // Apply the 2px reduction
+      newSize = newSize - 2;
+
+      // Set both box and QR size
+      setBoxSize(newSize);
+      setQrSize(newSize - (textHeight + spacingBuffer) * 2);
+      return;
+    }
+
     if (config?.format === "center") {
       // Calculate size for centered format
       const lineCount = (text.match(/\n/g) || []).length + 1;
@@ -331,7 +349,7 @@ const TextToGraphics = ({
     textTop: {
       position: "absolute",
       top: "0px",
-      right: "6px",
+      right: "4px",
       rotate: "180deg",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
@@ -339,13 +357,13 @@ const TextToGraphics = ({
     textBottom: {
       position: "absolute",
       bottom: "0px",
-      left: "6px",
+      left: "3px",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
     },
     textLeft: {
       position: "absolute",
-      top: "6px",
+      top: "3px",
       left: "0px",
       writingMode: "vertical-rl",
       wordWrap: "break-word",
@@ -356,7 +374,7 @@ const TextToGraphics = ({
       writingMode: "vertical-rl",
       transform: "rotate(180deg)",
       textAlign: "left",
-      bottom: "6px",
+      bottom: "3px",
       right: "1px",
       whiteSpace: "break-spaces",
       wordWrap: "break-word",
