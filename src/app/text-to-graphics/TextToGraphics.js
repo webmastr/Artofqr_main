@@ -12,17 +12,12 @@ import {
   lettersPerRowMapLeft_withQr,
 } from "./help";
 import Loading from "../../components/commons/loading";
-import { QRCode } from "react-qrcode-logo";
+
 import {
-  Download,
   Image as ImageIcon,
-  Cog,
-  Printer,
-  Wand2,
   Layout,
   Code,
   ShoppingCart,
-  Check,
   Info,
 } from "lucide-react";
 import Cart from "./components/Cart";
@@ -58,7 +53,7 @@ const TextToGraphics = ({
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [showProductSelector, setShowProductSelector] = useState(false);
-  const [fontLoading, setFontLoading] = useState(true);
+
   const [productOptions, setProductOptions] = useState([]);
   const [productLoading, setProductLoading] = useState(false);
 
