@@ -232,7 +232,7 @@ const TextToGraphics = ({
       }
 
       // Apply the 2px reduction
-      newSize = newSize - 2;
+      newSize = newSize - 3;
 
       // Set both box and QR size
       setBoxSize(newSize);

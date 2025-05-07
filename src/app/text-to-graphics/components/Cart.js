@@ -1,4 +1,3 @@
-// Main Cart.jsx file
 import React, { useState, useEffect, useRef } from "react";
 import {
   ShoppingCart,
@@ -25,7 +24,6 @@ import {
 // Importing sub-components
 import CartItem from "./CartItem";
 import AddressForm from "./AddressForm";
-import ShippingOptions from "./ShippingOptions";
 import OrderConfirmation from "./OrderConfirmation";
 import EmptyCart from "./EmptyCart";
 
@@ -101,9 +99,10 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
         if (input) {
           input.focus();
 
-          // If it's a text input, place cursor at the end
+          // If it's a text input (specifically type="text"), place cursor at the end
+          // Email, number, and other input types don't support setSelectionRange
           if (
-            input.type !== "select-one" &&
+            input.type === "text" &&
             typeof input.setSelectionRange === "function"
           ) {
             const length = input.value.length;
@@ -215,9 +214,13 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
       );
 
       if (response.data.success) {
-        setShippingRates(response.data.rates);
-        if (response.data.rates.length > 0) {
-          setSelectedShipping(response.data.rates[0].id);
+        // Filter to only show carbon offset shipping rate
+        const carbonOffsetRate = response.data.rates.find(
+          (rate) => rate.id === "STANDARD_CARBON_OFFSET"
+        );
+        setShippingRates(carbonOffsetRate ? [carbonOffsetRate] : []);
+        if (carbonOffsetRate) {
+          setSelectedShipping(carbonOffsetRate.id);
         }
       } else {
         setErrorMessage("Failed to get shipping rates: " + response.data.error);
@@ -297,7 +300,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
           items: lineItems,
           shipping: {
             id: selectedShipping,
-            name: selectedRate?.name || "Standard Shipping",
+            name: selectedRate?.name || "Carbon Neutral Shipping",
             rate: selectedRate?.rate || shippingCost,
           },
           coupon: couponInfo, // Pass coupon info to the server
@@ -324,8 +327,8 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
   const shippingCost = selectedShipping
     ? parseFloat(
         shippingRates.find((rate) => rate.id === selectedShipping)?.rate
-      ) || 4.99
-    : 4.99;
+      ) || 4.78
+    : 4.78; // Default to carbon offset shipping cost of 4.78
 
   // Calculate discount amount with max discount consideration
   const discount = couponInfo
@@ -399,6 +402,35 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
         )}
       </div>
     );
+  };
+
+  // Render shipping information section
+  const renderShippingInfo = () => {
+    if (shippingRates.length > 0) {
+      const rate = shippingRates[0]; // Get the carbon offset shipping rate
+
+      return (
+        <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-1">
+              <Check size={18} className="text-green-500" />
+            </div>
+            <div className="ml-3">
+              <h3 className="text-md font-medium text-gray-800 dark:text-gray-200">
+                Carbon Neutral Shipping
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                {rate.name}
+              </p>
+              <p className="text-sm font-medium text-gray-800 dark:text-gray-200 mt-1">
+                ${rate.rate}
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
   };
 
   // Cart content rendering
@@ -490,15 +522,8 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
           />
         )}
 
-        {shippingRates.length > 0 && (
-          <ShippingOptions
-            shippingRates={shippingRates}
-            selectedShipping={selectedShipping}
-            setSelectedShipping={setSelectedShipping}
-            isLoadingRates={isLoadingRates}
-            errorMessage={errorMessage}
-          />
-        )}
+        {/* Show Carbon Offset shipping information */}
+        {shippingRates.length > 0 && renderShippingInfo()}
       </div>
     );
   };
