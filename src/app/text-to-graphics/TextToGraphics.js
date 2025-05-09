@@ -119,7 +119,7 @@ const TextToGraphics = ({
 
             try {
               const response = await axios.post(
-                "https://artqr-backend-main.onrender.com/uploadImage/mockups",
+                "https://artqr-backend.onrender.com/uploadImage/mockups",
                 body
               );
               if (response.status === 200) {
@@ -136,7 +136,7 @@ const TextToGraphics = ({
                 await timer(5000);
 
                 const successfulUrls = await axios.get(
-                  `https://artqr-backend-main.onrender.com/uploadImage/mockup-results?payload=${payload}`
+                  `https://artqr-backend.onrender.com/uploadImage/mockup-results?payload=${payload}`
                 );
                 setLoader(false);
                 if (successfulUrls.status === 200) {

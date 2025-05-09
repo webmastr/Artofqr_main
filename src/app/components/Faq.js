@@ -49,7 +49,7 @@ function FAQSection() {
 
     try {
       const response = await fetch(
-        "https://artDiamond QR-backend.vercel.app/newsletter/submit-user-info",
+        "https://artqr-backend.vercel.app/newsletter/submit-user-info",
         {
           method: "POST",
           headers: {
