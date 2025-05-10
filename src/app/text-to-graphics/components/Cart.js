@@ -249,9 +249,6 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
     return requiredFields.every((field) => addressForm[field]?.trim());
   };
 
-  // Place order with Stripe checkout
-  // ...existing imports remain the same
-
   const placeOrder = async () => {
     if (!selectedShipping) {
       setErrorMessage("Please select a shipping method");
@@ -294,12 +291,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
         (rate) => rate.id === selectedShipping
       );
 
-      // Calculate the current values to send to the backend
-      const currentSubtotal = subtotal;
-      const currentDiscount = discount;
-      const currentTotal = total;
-
-      // Call Stripe checkout endpoint with all calculated values
+      // Call Stripe checkout endpoint - sending the calculated total amount!
       const response = await axios.post(
         "https://artqr-backend.vercel.app/stripe/create-checkout-session",
         {
@@ -310,7 +302,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
             name: selectedRate?.name || "Carbon Neutral Shipping",
             rate: 0, // Set shipping rate to 0 in the API call
           },
-          coupon: couponInfo, // Pass coupon info to the server
+          total: total, // Pass the calculated total which includes any discounts
         }
       );
 
@@ -330,7 +322,6 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
     }
   };
 
-  // ...rest of the component remains the same
   const subtotal = cart.reduce((total, item) => total + item.price, 0);
   const shippingCost = selectedShipping
     ? parseFloat(
