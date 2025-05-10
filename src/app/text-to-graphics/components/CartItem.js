@@ -1,6 +1,6 @@
-// CartItem.jsx
 import React from "react";
-import { ChevronDown } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
+import BundleDisplay from "./BundleDisplay";
 
 const CartItem = ({
   item,
@@ -8,75 +8,109 @@ const CartItem = ({
   selectedVariants,
   handleVariantChange,
   removeItem,
+  cart,
 }) => {
-  return (
-    <div className="py-4 flex flex-col md:flex-row md:items-center md:justify-between">
-      <div className="flex items-center mb-3 md:mb-0">
-        <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded overflow-hidden mr-4">
+  // Check if this item is part of a bundle
+  const isPartOfBundle = item.bundle_id !== undefined;
+
+  // Find all items that belong to the same bundle
+  const bundleItems = isPartOfBundle
+    ? cart.filter((cartItem) => cartItem.bundle_id === item.bundle_id)
+    : [];
+
+  // Only render the first item of each bundle group to avoid duplicates
+  const isFirstInBundle = isPartOfBundle
+    ? cart.findIndex((cartItem) => cartItem.bundle_id === item.bundle_id) ===
+      index
+    : true;
+
+  // Skip rendering if not the first item in bundle and is part of a bundle
+  if (isPartOfBundle && !isFirstInBundle) {
+    return null;
+  }
+
+  // For standalone item (not part of a bundle)
+  const renderStandaloneItem = () => {
+    const variants = item.pricing?.variants || {};
+
+    return (
+      <div className="flex items-start">
+        <div className="w-20 h-20 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-700 mr-4">
           <img
             src={item.image}
             alt={item.name}
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <h3 className="font-medium text-gray-800 dark:text-gray-200">
-            {item.name}
-          </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {item.size && `Size: ${item.size}`}
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Design: {item.designText?.substring(0, 20)}
-            {item.designText?.length > 20 ? "..." : ""}
-          </p>
-        </div>
-      </div>
-
-      <div className="flex flex-col md:flex-row md:items-center">
-        {/* Variant selection */}
-        {item.pricing && item.pricing.variants && (
-          <div className="relative mb-3 md:mb-0 md:mr-6 w-full md:w-40">
-            <select
-              value={selectedVariants[item.product_id] || item.variant_id || ""}
-              onChange={(e) => {
-                const variantId = e.target.value;
-                const variantData = item.pricing.variants[variantId];
-                handleVariantChange(
-                  index,
-                  item.product_id,
-                  variantId,
-                  variantData
-                );
-              }}
-              className="block w-full pl-3 pr-10 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+        <div className="flex-1">
+          <div className="flex justify-between">
+            <h3 className="font-medium text-gray-800 dark:text-gray-200">
+              {item.name}
+            </h3>
+            <button
+              onClick={removeItem}
+              className="text-gray-400 hover:text-red-500"
             >
-              {Object.entries(item.pricing.variants).map(
-                ([variantId, variant]) => (
-                  <option key={variantId} value={variantId}>
-                    {variant.size} - ${variant.price.toFixed(2)}
-                  </option>
-                )
-              )}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500 dark:text-gray-400">
-              <ChevronDown size={16} />
-            </div>
+              <X size={18} />
+            </button>
           </div>
-        )}
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Size: {item.size}
+          </p>
 
-        <div className="flex items-center justify-between md:justify-end w-full">
-          <span className="font-medium text-gray-800 dark:text-gray-200 mr-4">
+          {item.designText && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Design: {item.designText}
+            </p>
+          )}
+
+          {/* Variant dropdown for standalone items */}
+          {Object.keys(variants).length > 0 && (
+            <div className="mt-3 w-full max-w-xs">
+              <div className="relative">
+                <select
+                  value={selectedVariants[item.product_id] || item.variant_id}
+                  onChange={(e) => {
+                    const variantId = e.target.value;
+                    const variantData = variants[variantId];
+                    handleVariantChange(
+                      index,
+                      item.product_id,
+                      variantId,
+                      variantData
+                    );
+                  }}
+                  className="block w-full pl-3 pr-10 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {Object.entries(variants).map(([variantId, variant]) => (
+                    <option key={variantId} value={variantId}>
+                      {variant.size}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500 dark:text-gray-400">
+                  <ChevronDown size={16} />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="text-right ml-4">
+          <p className="font-medium text-gray-800 dark:text-gray-200">
             ${item.price.toFixed(2)}
-          </span>
-          <button
-            onClick={removeItem}
-            className="text-red-500 hover:text-red-600 transition-colors duration-200"
-          >
-            Remove
-          </button>
+          </p>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="py-6 first:pt-0">
+      {isPartOfBundle ? (
+        <BundleDisplay bundleItems={bundleItems} removeBundle={removeItem} />
+      ) : (
+        renderStandaloneItem()
+      )}
     </div>
   );
 };

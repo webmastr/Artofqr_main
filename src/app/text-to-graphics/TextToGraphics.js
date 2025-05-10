@@ -280,9 +280,15 @@ const TextToGraphics = ({
   }, [text, spacingBuffer, config?.format, defaultBoxSize]);
 
   // Updated addToCart function
-  const addToCart = (cartItem) => {
-    // Simply add the received cart item to the cart
-    setCart([...cart, cartItem]);
+  const addToCart = (...items) => {
+    // If multiple items are passed (for bundles)
+    if (items.length > 1) {
+      setCart((prevCart) => [...prevCart, ...items]);
+    } else {
+      // Single item
+      const item = items[0];
+      setCart((prevCart) => [...prevCart, item]);
+    }
   };
 
   // Handle order submission

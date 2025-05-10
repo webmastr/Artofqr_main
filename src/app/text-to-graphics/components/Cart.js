@@ -250,6 +250,8 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
   };
 
   // Place order with Stripe checkout
+  // ...existing imports remain the same
+
   const placeOrder = async () => {
     if (!selectedShipping) {
       setErrorMessage("Please select a shipping method");
@@ -292,7 +294,12 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
         (rate) => rate.id === selectedShipping
       );
 
-      // Call Stripe checkout endpoint
+      // Calculate the current values to send to the backend
+      const currentSubtotal = subtotal;
+      const currentDiscount = discount;
+      const currentTotal = total;
+
+      // Call Stripe checkout endpoint with all calculated values
       const response = await axios.post(
         "https://artqr-backend.vercel.app/stripe/create-checkout-session",
         {
@@ -301,7 +308,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
           shipping: {
             id: selectedShipping,
             name: selectedRate?.name || "Carbon Neutral Shipping",
-            rate: selectedRate?.rate || shippingCost,
+            rate: 0, // Set shipping rate to 0 in the API call
           },
           coupon: couponInfo, // Pass coupon info to the server
         }
@@ -323,6 +330,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
     }
   };
 
+  // ...rest of the component remains the same
   const subtotal = cart.reduce((total, item) => total + item.price, 0);
   const shippingCost = selectedShipping
     ? parseFloat(
@@ -340,8 +348,9 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
       : Math.min(couponInfo.value || 0, subtotal) // Fixed amount discount, capped at subtotal
     : 0;
 
+  // Calculate discounted subtotal (which is also the final total since shipping is free)
   const discountedSubtotal = subtotal - discount;
-  const total = discountedSubtotal + shippingCost;
+  const total = discountedSubtotal; // Final total without shipping
 
   // Render coupon form
   const renderCouponForm = () => {
@@ -423,7 +432,8 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
                 {rate.name}
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-gray-200 mt-1">
-                ${rate.rate}
+                <span className="line-through text-gray-400">${rate.rate}</span>
+                <span className="text-green-500 ml-2 font-medium">FREE!</span>
               </p>
             </div>
           </div>
@@ -434,10 +444,30 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
   };
 
   // Cart content rendering
+  // Update this section in the Cart component
+
   const renderCartContent = () => {
     if (cart.length === 0) {
       return <EmptyCart setActiveTab={setActiveTab} />;
     }
+
+    // Create a Set to track the bundle IDs we've already rendered
+    const renderedBundles = new Set();
+
+    // Extract the unique bundles to process
+    const uniqueBundleItems = cart.filter((item, index) => {
+      // If not part of a bundle, include it
+      if (!item.bundle_id) return true;
+
+      // If we haven't seen this bundle before, include it and mark as seen
+      if (!renderedBundles.has(item.bundle_id)) {
+        renderedBundles.add(item.bundle_id);
+        return true;
+      }
+
+      // Skip items from bundles we've already processed
+      return false;
+    });
 
     return (
       <div>
@@ -449,7 +479,20 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
               index={index}
               selectedVariants={selectedVariants}
               handleVariantChange={handleVariantChange}
-              removeItem={() => setCart(cart.filter((_, i) => i !== index))}
+              cart={cart}
+              removeItem={() => {
+                // If this is part of a bundle, remove all items with the same bundle_id
+                if (item.bundle_id) {
+                  setCart(
+                    cart.filter(
+                      (cartItem) => cartItem.bundle_id !== item.bundle_id
+                    )
+                  );
+                } else {
+                  // Otherwise just remove this single item
+                  setCart(cart.filter((_, i) => i !== index));
+                }
+              }}
             />
           ))}
         </div>
@@ -474,7 +517,10 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
           <div className="flex justify-between mb-4">
             <span className="text-gray-600 dark:text-gray-400">Shipping</span>
             <span className="font-medium text-gray-800 dark:text-gray-200">
-              ${shippingCost.toFixed(2)}
+              <span className="line-through text-gray-400">
+                ${shippingCost.toFixed(2)}
+              </span>
+              <span className="text-green-500 ml-2 font-medium">FREE!</span>
             </span>
           </div>
           <div className="flex justify-between mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
@@ -522,7 +568,7 @@ const Cart = ({ cart, setCart, setActiveTab, orderPlaced, setOrderPlaced }) => {
           />
         )}
 
-        {/* Show Carbon Offset shipping information */}
+        {/* Show Carbon Offset shipping information with FREE indicator */}
         {shippingRates.length > 0 && renderShippingInfo()}
       </div>
     );

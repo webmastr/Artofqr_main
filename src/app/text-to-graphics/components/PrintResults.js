@@ -98,11 +98,14 @@ const PrintResults = ({
   }, [mockupUrl]);
 
   // Handle adding bucket to cart with fixed price of $99
+  // Updated handleAddBucketToCart function in PrintResults component
   const handleAddBucketToCart = (bucket) => {
-    // Calculate individual item price (divide $99 by number of items in the bundle)
-    const individualPrice =
-      99 /
-      bucket.filter((product) => selectedVariants[product.product_id]).length;
+    // Fixed individual price of $33 per item
+    const individualPrice = 33;
+    const bundlePrice = 99;
+    const bundleId = `bundle-${new Date().getTime()}-${Math.floor(
+      Math.random() * 1000
+    )}`;
 
     // Create cart items for all products in the bucket
     const cartItems = bucket
@@ -115,25 +118,28 @@ const PrintResults = ({
         return {
           product_id: productId,
           variant_id: variantId,
-          price: individualPrice, // Fixed price share
-          bundle_price: 99.0, // Add bundle price for reference
-          bundle_id: `bundle-${bucket.indexOf(product)}`, // Add bundle identifier
+          price: individualPrice, // Fixed price per item ($33)
+          bundle_price: bundlePrice, // Bundle total price ($99)
+          bundle_id: bundleId, // Same bundle ID for all items in this bundle
           name: product.product_name,
           size: variantSizes[productId],
           image: product.mockupUrl,
           designText: product.placement || "Custom Design",
           designUrl: "",
+          // Add pricing info for variant selection in cart
+          pricing: {
+            variants: product.pricing.variants,
+          },
         };
       })
       .filter((item) => item !== null);
 
     // Add all valid items to cart
-    cartItems.forEach((item) => {
-      addToCart(item);
-    });
-
-    // Navigate to cart tab if at least one item was added
     if (cartItems.length > 0) {
+      // Add all items at once to maintain bundle integrity
+      addToCart(...cartItems);
+
+      // Navigate to cart tab
       setActiveTab("cart");
     }
   };
