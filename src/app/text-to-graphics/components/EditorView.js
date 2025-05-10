@@ -166,13 +166,6 @@ const EditorView = ({
             <Printer size={16} className="mr-2" />
             Products
           </button>
-          <button
-            onClick={() => navigate("/config")}
-            className="flex items-center justify-center py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors duration-200"
-          >
-            <Cog size={16} className="mr-2" />
-            Config
-          </button>
         </div>
 
         {/* Order Button */}
