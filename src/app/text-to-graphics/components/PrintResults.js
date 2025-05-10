@@ -76,14 +76,34 @@ const PrintResults = ({
     return [];
   };
 
-  // Create buckets of products (3 products per bucket)
+  // Create 2 specific buckets for products (product IDs: [206, 821, 660] and remaining 3)
   useEffect(() => {
     const mockups = getMockups();
     if (mockups.length > 0) {
+      // Filter products for first bucket (product IDs: 206, 821, 660)
+      const firstBucketProducts = mockups.filter((product) =>
+        ["206", "821", "660", 206, 821, 660].includes(product.product_id)
+      );
+
+      // Filter remaining products for second bucket (should be 3 products)
+      const secondBucketProducts = mockups.filter(
+        (product) =>
+          !["206", "821", "660", 206, 821, 660].includes(product.product_id)
+      );
+
+      // Create exactly 2 buckets with the specified products
       const buckets = [];
-      for (let i = 0; i < mockups.length; i += 3) {
-        buckets.push(mockups.slice(i, i + 3));
+
+      // Add first bucket if it has products
+      if (firstBucketProducts.length > 0) {
+        buckets.push(firstBucketProducts);
       }
+
+      // Add second bucket if it has products
+      if (secondBucketProducts.length > 0) {
+        buckets.push(secondBucketProducts);
+      }
+
       setProductBuckets(buckets);
 
       // Set default variants for all products
@@ -98,7 +118,6 @@ const PrintResults = ({
   }, [mockupUrl]);
 
   // Handle adding bucket to cart with fixed price of $99
-  // Updated handleAddBucketToCart function in PrintResults component
   const handleAddBucketToCart = (bucket) => {
     // Fixed individual price of $33 per item
     const individualPrice = 33;
