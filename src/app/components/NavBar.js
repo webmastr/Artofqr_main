@@ -9,12 +9,15 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../../../public/images/logo.png";
 import { useRouter } from "next/navigation";
+import DesignModal from "./DesignModal"; // Import the new DesignModal component
 
 function NavBar() {
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("hero");
+  // New state for modal
+  const [designModalOpen, setDesignModalOpen] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -67,7 +70,7 @@ function NavBar() {
 
   // Disable body scroll when menu is open
   useEffect(() => {
-    if (menu) {
+    if (menu || designModalOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -75,7 +78,7 @@ function NavBar() {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [menu]);
+  }, [menu, designModalOpen]);
 
   const toggleMenu = () => {
     setMenu(!menu);
@@ -177,13 +180,38 @@ function NavBar() {
     { name: "Contacts", id: "contact" },
   ];
 
+  // Handle modal functions
+  const openDesignModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDesignModalOpen(true);
+    // Close mobile menu if open
+    if (menu) setMenu(false);
+  };
+
+  const closeDesignModal = () => {
+    setDesignModalOpen(false);
+  };
+
+  const handleGuidedDesign = () => {
+    closeDesignModal();
+    // Navigate to guided design flow
+    router.push("/#tellUsAboutYou");
+  };
+
+  const handleSkipDesign = () => {
+    closeDesignModal();
+    // Navigate directly to designer
+    router.push("/designer");
+  };
+
   const handleNavItemClick = (item) => {
     // Close mobile menu if open
     if (menu) setMenu(false);
 
-    // If the Design section is clicked, navigate to the designer page
+    // If the Design section is clicked, open the modal instead of navigating
     if (item.id === "design") {
-      router.push("/designer");
+      setDesignModalOpen(true);
     } else {
       // For all other items, navigate to home page with hash fragment
       router.push(`/#${item.id}`);
@@ -260,7 +288,11 @@ function NavBar() {
                       ? "text-blue-600 dark:text-blue-400"
                       : "text-gray-700 dark:text-gray-100"
                   }`}
-                  onClick={() => handleNavItemClick(item)}
+                  onClick={
+                    item.id === "design"
+                      ? openDesignModal
+                      : () => handleNavItemClick(item)
+                  }
                 >
                   {item.name}
                 </motion.p>
@@ -376,7 +408,11 @@ function NavBar() {
                   custom={i}
                   variants={menuItemVariants}
                   className="mb-6 w-full text-center relative"
-                  onClick={() => handleNavItemClick(item)}
+                  onClick={
+                    item.id === "design"
+                      ? openDesignModal
+                      : () => handleNavItemClick(item)
+                  }
                 >
                   <motion.div
                     whileHover={{
@@ -455,6 +491,18 @@ function NavBar() {
               </motion.div>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Design Modal - Appears when Design nav item is clicked */}
+      <AnimatePresence>
+        {designModalOpen && (
+          <DesignModal
+            isOpen={designModalOpen}
+            onClose={closeDesignModal}
+            onGuideSelect={handleGuidedDesign}
+            onSkipSelect={handleSkipDesign}
+          />
         )}
       </AnimatePresence>
     </>

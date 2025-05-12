@@ -259,6 +259,7 @@ function FAQSection() {
 
         {/* Tell Us About You Section - Now directly on the page instead of in a modal */}
         <motion.div
+          id="tellUsAboutYou"
           className="max-w-3xl mx-auto mt-16 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 border border-gray-200 dark:border-gray-700"
           variants={fadeUp}
           initial="hidden"

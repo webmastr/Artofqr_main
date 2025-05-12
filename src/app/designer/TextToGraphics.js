@@ -61,37 +61,68 @@ const TextToGraphics = ({
     let graphic = document.getElementById("graphic-parent");
     if (graphic) {
       setSpacingBuffer(5);
+      setLoderMsg("Preparing image for download...");
+      setLoader(true);
 
-      setTimeout(() => {
-        domtoimage
-          .toPng(graphic, { quality: 0.3 })
-          .then((dataUrl) => {
-            download(dataUrl, `${generateFileName(text)}.png`);
-            setSpacingBuffer(5);
-          })
-          .catch((err) => {
-            console.error("Oops, something went wrong!", err);
-          });
-      }, 1000);
+      try {
+        // Small delay to allow UI updates
+        await timer(300);
+
+        const dataUrl = await domtoimage.toPng(graphic, { quality: 0.95 });
+
+        // Create a download link element
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${generateFileName(text)}.png`;
+
+        // Firefox requires the link to be in the document
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+        setSpacingBuffer(5);
+      } catch (err) {
+        console.error("Failed to download image:", err);
+        setErrorMsg("Failed to download image. Please try again.");
+      } finally {
+        setLoader(false);
+      }
     }
   };
 
-  const downloadSvg = () => {
+  // Replace your existing downloadSvg function with this one
+  const downloadSvg = async () => {
     let graphic = document.getElementById("graphic-parent");
     if (graphic) {
       setSpacingBuffer(5);
+      setLoderMsg("Preparing SVG for download...");
+      setLoader(true);
 
-      setTimeout(() => {
-        domtoimage
-          .toSvg(graphic)
-          .then((dataUrl) => {
-            download(dataUrl, `${generateFileName(text)}.svg`);
-            setSpacingBuffer(5);
-          })
-          .catch((err) => {
-            console.error("Oops, something went wrong!", err);
-          });
-      }, 1000);
+      try {
+        // Small delay to allow UI updates
+        await timer(300);
+
+        const dataUrl = await domtoimage.toSvg(graphic);
+
+        // Create a download link element
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${generateFileName(text)}.svg`;
+
+        // Firefox requires the link to be in the document
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+        setSpacingBuffer(5);
+      } catch (err) {
+        console.error("Failed to download SVG:", err);
+        setErrorMsg("Failed to download SVG. Please try again.");
+      } finally {
+        setLoader(false);
+      }
     }
   };
 
