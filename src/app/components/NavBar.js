@@ -181,9 +181,9 @@ function NavBar() {
     // Close mobile menu if open
     if (menu) setMenu(false);
 
-    // If the Design section is clicked, navigate to the text-to-graphics page
+    // If the Design section is clicked, navigate to the designer page
     if (item.id === "design") {
-      router.push("/text-to-graphics");
+      router.push("/designer");
     } else {
       // For all other items, navigate to home page with hash fragment
       router.push(`/#${item.id}`);
@@ -193,7 +193,7 @@ function NavBar() {
   };
 
   const handleButtonClick = () => {
-    router.push("/text-to-graphics"); // Navigate to the text-to-Diamond QR page
+    router.push("/designer"); // Navigate to the text-to-Diamond QR page
   };
 
   return (
@@ -215,7 +215,7 @@ function NavBar() {
             variants={logoHoverVariants}
             whileHover="hover"
             whileTap="tap"
-            className="relative h-24 w-44 flex items-center"
+            className="relative h-18 w-34 flex items-center"
           >
             {/* Add separate animation for the wiggle effect */}
             <motion.div

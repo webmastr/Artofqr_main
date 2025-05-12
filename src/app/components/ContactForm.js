@@ -78,7 +78,7 @@ function ContactFormSection() {
     try {
       // Updated endpoint to match the required URL
       const response = await axios.post(
-        "https://artDiamond QR-backend.vercel.app/contact/SubmitContact",
+        "https://artQR-backend.vercel.app/contact/SubmitContact",
         formData
       );
 

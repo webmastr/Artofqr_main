@@ -91,6 +91,9 @@ export const metadata = {
       "https://printful-upload.s3-accelerate.amazonaws.com/tmp/76d58afd9c3d88107f580c17ed2dff6e/unisex-v-neck-tee-white-front-681b54b0ec970.jpg",
     ],
   },
+  icons: {
+    icon: "/logoo.png",
+  },
 };
 
 export default function RootLayout({ children }) {

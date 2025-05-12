@@ -74,7 +74,7 @@ function AboutWithVideoSection() {
     },
   };
   const handleButtonClick = () => {
-    router.push("/text-to-graphics"); // Navigate to the text-to-Diamond QR page
+    router.push("/designer"); // Navigate to the text-to-Diamond QR page
   };
 
   return (

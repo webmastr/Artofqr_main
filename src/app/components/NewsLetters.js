@@ -110,7 +110,7 @@ function Newsletter() {
 
     try {
       const response = await axios.post(
-        "https://artDiamond QR-backend.vercel.app/newsletter/create-newsletter",
+        "https://artQR-backend.vercel.app/newsletter/create-newsletter",
         { email }
       ); // Update endpoint as needed
       if (response.status === 200) {

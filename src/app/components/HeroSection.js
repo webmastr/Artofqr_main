@@ -7,7 +7,6 @@ import { motion, useViewportScroll, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [isInView, setIsInView] = useState(true);
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
@@ -15,38 +14,36 @@ const HeroSection = () => {
   const { scrollY } = useViewportScroll();
   const scale = useTransform(scrollY, [0, 200], [1, 0.98]);
 
-  // Handle scroll position for animations
+  // Improved intersection observer for video visibility
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const scrollThreshold = 100;
-      if (scrollPosition > scrollThreshold) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+    if (!sectionRef.current || !videoRef.current) return;
 
-      // Check if video is in view
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 } // Trigger when at least 10% of the element is visible
+    );
 
-        setIsInView(isVisible);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
-  // Control video playback based on visibility
+  // Better video playback control
   useEffect(() => {
-    if (videoRef.current) {
-      if (isInView) {
-        videoRef.current.play().catch((error) => {
+    if (!videoRef.current) return;
+
+    if (isInView) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
           console.log("Video play failed:", error);
         });
-      } else {
+      }
+    } else {
+      // Only pause if the video is actually playing
+      if (!videoRef.current.paused) {
         videoRef.current.pause();
       }
     }
@@ -91,7 +88,7 @@ const HeroSection = () => {
   };
 
   const handleButtonClick = () => {
-    router.push("/text-to-graphics");
+    router.push("/designer");
   };
 
   return (
@@ -171,7 +168,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right column - Video */}
+          {/* Right column - Video with improved container */}
           <motion.div
             className="order-1 lg:order-2 flex justify-center cursor-pointer"
             variants={fadeDown}
@@ -179,7 +176,7 @@ const HeroSection = () => {
             <motion.div
               className="relative rounded-xl shadow-2xl border overflow-hidden w-full"
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
               style={{ scale }}
               whileHover={{
                 scale: 1.02,
@@ -187,17 +184,17 @@ const HeroSection = () => {
                 transition: { type: "spring", stiffness: 400, damping: 20 },
               }}
             >
-              {/* Using aspect ratio instead of fixed height for responsiveness */}
-              <div className="relative w-full pb-[75%] sm:pb-[80%] md:pb-[75%] lg:pb-[70%]">
+              {/* Adjusted container to preserve video proportions */}
+              <div className="relative w-full pb-[56.25%]">
                 <video
                   ref={videoRef}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-contain"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="auto"
                 >
-                  {/* Replace with your video URL */}
                   <source src="/images/banner original.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>

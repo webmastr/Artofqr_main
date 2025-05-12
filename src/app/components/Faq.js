@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Plus, Minus, X } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 function FAQSection() {
   const [scrolled, setScrolled] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     interest: "",
@@ -69,11 +68,10 @@ function FAQSection() {
       setSubmitSuccess(true);
       setFormData({ name: "", interest: "", favorite: "" });
 
-      // Close modal after successful submission with slight delay for feedback
+      // Reset success message after a delay
       setTimeout(() => {
-        setShowModal(false);
         setSubmitSuccess(false);
-      }, 2000);
+      }, 5000);
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitError(error.message);
@@ -116,28 +114,6 @@ function FAQSection() {
       transition: {
         staggerChildren: 0.15,
         delayChildren: 0.2,
-      },
-    },
-  };
-
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.3,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.8,
-      transition: {
-        duration: 0.2,
       },
     },
   };
@@ -185,7 +161,7 @@ function FAQSection() {
   };
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full overflow-hidden">
       <motion.section
         className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24"
         initial="hidden"
@@ -281,181 +257,109 @@ function FAQSection() {
           ))}
         </motion.div>
 
-        {/* Tell Us About You Section */}
+        {/* Tell Us About You Section - Now directly on the page instead of in a modal */}
         <motion.div
-          className="text-center mt-16"
+          className="max-w-3xl mx-auto mt-16 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 border border-gray-200 dark:border-gray-700"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.div className="max-w-2xl mx-auto mb-8" variants={fadeIn}>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              Still have questions? We're here to help!
+          <motion.div className="mb-8" variants={fadeIn}>
+            <h3 className="text-2xl font-semibold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-4">
+              Tell Us About You
             </h3>
-            <p className="text-gray-700 dark:text-gray-300">
-              Tell us about yourself and we'll get back to you with personalized
-              assistance. Our team is ready to provide you with the information
-              you need.
+            <p className="text-gray-700 dark:text-gray-300 text-center">
+              Still have questions? We're here to help! Tell us about yourself
+              and we'll get back to you with personalized assistance.
             </p>
           </motion.div>
 
-          {/* Tell Us About You Button - centered below text */}
-          <motion.div
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)",
-              transition: { type: "spring", stiffness: 400, damping: 20 },
-            }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-block cursor-pointer"
-          >
-            <button
-              onClick={() => setShowModal(true)}
-              className="px-8 py-3 flex items-center justify-center gap-2 shadow-lg bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 dark:from-purple-600 dark:to-pink-500 text-white rounded-md font-medium transition-all duration-300 cursor-pointer"
+          {submitSuccess && (
+            <div className="mb-6 p-3 bg-green-100 border border-green-200 text-green-700 rounded-md">
+              Information submitted successfully! We'll be in touch soon.
+            </div>
+          )}
+
+          {submitError && (
+            <div className="mb-6 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md">
+              {submitError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              {/* Name Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              {/* Interest Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Your Interest
+                </label>
+                <input
+                  type="text"
+                  name="interest"
+                  value={formData.interest}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                  placeholder="Fashion, Technology, etc."
+                />
+              </div>
+
+              {/* Favorite Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Your Favorite
+                </label>
+                <input
+                  type="text"
+                  name="favorite"
+                  value={formData.favorite}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
+                  placeholder="Color, Food, Activity, etc."
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full mt-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-md font-medium transition-all duration-300 ${
+                isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+              }`}
+              whileHover={
+                !isSubmitting
+                  ? {
+                      scale: 1.02,
+                      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+                    }
+                  : {}
+              }
+              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
             >
-              <span>Tell Us About You</span>
-              <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                  transition: {
-                    repeat: Infinity,
-                    duration: 1.5,
-                    ease: "easeOut",
-                    repeatDelay: 0.5,
-                  },
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-              </motion.div>
-            </button>
-          </motion.div>
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </motion.button>
+          </form>
         </motion.div>
       </motion.section>
-
-      {/* Modal Overlay */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <motion.div
-            className="bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-md w-full p-6 relative"
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            >
-              <X size={24} />
-            </button>
-
-            <h3 className="text-2xl font-bold dark:text-white mb-6 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-              Tell Us About You
-            </h3>
-
-            {submitSuccess && (
-              <div className="mb-6 p-3 bg-green-100 border border-green-200 text-green-700 rounded-md">
-                Information submitted successfully! We'll be in touch soon.
-              </div>
-            )}
-
-            {submitError && (
-              <div className="mb-6 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md">
-                {submitError}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-4">
-                {/* Name Field */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                {/* Interest Field */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Your Interest
-                  </label>
-                  <input
-                    type="text"
-                    name="interest"
-                    value={formData.interest}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
-                    placeholder="Fashion, Technology, etc."
-                  />
-                </div>
-
-                {/* Favorite Field */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Your Favorite
-                  </label>
-                  <input
-                    type="text"
-                    name="favorite"
-                    value={formData.favorite}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white"
-                    placeholder="Color, Food, Activity, etc."
-                  />
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full mt-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-md font-medium transition-all duration-300 ${
-                  isSubmitting ? "opacity-75 cursor-not-allowed" : ""
-                }`}
-                whileHover={
-                  !isSubmitting
-                    ? {
-                        scale: 1.02,
-                        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-                      }
-                    : {}
-                }
-                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-              >
-                {isSubmitting ? "Submitting..." : "Submit"}
-              </motion.button>
-            </form>
-          </motion.div>
-        </div>
-      )}
     </div>
   );
 }
